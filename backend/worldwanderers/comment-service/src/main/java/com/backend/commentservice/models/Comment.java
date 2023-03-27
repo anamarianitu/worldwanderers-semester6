@@ -1,12 +1,12 @@
-package com.backend.likeservice.models;
+package com.backend.commentservice.models;
 
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-@Table(name="likes")
-public class Like {
+@Table(name="comments")
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +15,16 @@ public class Like {
     @Column(name="post_id")
     private Long postId;
 
-    public Like(Long id, Long postId) {
+    @Column(name="comment")
+    private String comment;
+
+    public Comment(Long id, Long postId, String comment) {
         this.id = id;
         this.postId = postId;
+        this.comment = comment;
     }
 
-    public Like() {
+    public Comment() {
 
     }
 
@@ -32,19 +36,26 @@ public class Like {
 
     public void setPostId(Long postId) { this.postId = postId; }
 
+    public String getComment() { return comment; }
+
+    public void setComment(String comment) { this.comment = comment; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Like like = (Like) o;
-        return Objects.equals(id, like.id) && Objects.equals(postId, like.postId);
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) && Objects.equals(postId, comment.postId)
+                && Objects.equals(comment, comment.comment);
     }
+
 
     @Override
     public String toString() {
-        return "Like{" +
+        return "Content{" +
                 "id=" + id +
                 ", post id='" + postId + '\'' +
+                ", content='" + comment + '\'' +
                 '}';
     }
 }
