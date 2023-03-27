@@ -1,2 +1,3 @@
 rootProject.name = 'worldwanderers'
 include 'post-service'
+include 'like-service'

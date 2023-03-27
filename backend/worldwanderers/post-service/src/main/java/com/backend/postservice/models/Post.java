@@ -7,8 +7,6 @@ import lombok.Data;
 
 import java.util.Objects;
 
-//@Data
-//@Builder
 @Entity
 @Table(name="posts")
 public class Post {
