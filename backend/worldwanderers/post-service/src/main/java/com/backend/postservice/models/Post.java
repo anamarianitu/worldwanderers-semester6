@@ -2,7 +2,12 @@ package com.backend.postservice.models;
 
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="posts")
@@ -14,6 +19,19 @@ public class Post {
 
     @Column(name="description")
     private String description;
+
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name="updated_at")
+    private LocalDateTime updatedAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags = new HashSet<>();
 
     public Post() {
 
