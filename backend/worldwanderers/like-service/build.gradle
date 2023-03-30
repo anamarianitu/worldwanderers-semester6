@@ -23,6 +23,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     implementation 'org.mockito:mockito-core:4.0.0'
     runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0'
 }
 
 tasks.named('test') {
