@@ -25,6 +25,9 @@ public class GatewayConfig {
                 .route(r -> r.path("/tags/**")
                         .filters(f -> f.filter(filterFunction()))
                         .uri("lb://post-service"))
+                .route(r -> r.path("/users/**")
+                        .filters(f -> f.filter(filterFunction()))
+                        .uri("lb://user-service"))
                 .build();
 
     }
