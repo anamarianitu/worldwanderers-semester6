@@ -2,9 +2,6 @@ package com.backend.postservice.models;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-
 import java.util.Objects;
 
 @Entity
