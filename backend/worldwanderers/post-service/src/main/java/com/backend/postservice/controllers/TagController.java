@@ -1,7 +1,7 @@
 package com.backend.postservice.controllers;
 
-import com.backend.postservice.models.Post;
-import com.backend.postservice.services.PostService;
+import com.backend.postservice.models.Tag;
+import com.backend.postservice.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,27 +17,52 @@ import static org.springframework.http.HttpStatus.OK;
 public class TagController {
 
     @Autowired
-    private PostService postService;
+    private TagService tagService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Post>> getAllPosts(){
-        return new ResponseEntity<>(postService.getAllPosts(), OK);
+    public ResponseEntity<List<Tag>> getAllTags(){
+        return new ResponseEntity<>(tagService.getAllTags(), OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Post>> getPostById(@PathVariable(value = "id") Long id){
-        Optional<Post> post = postService.getPostById(id);
+    public ResponseEntity<Optional<Tag>> getTagById(@PathVariable(value = "id") Long id){
+        Optional<Tag> tag = tagService.getTagById(id);
 
-        if (post.isPresent()) {
-            return new ResponseEntity<>(post, OK);
+        if (tag.isPresent()) {
+            return new ResponseEntity<>(tag, OK);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Post> addPost(@RequestBody Post post){
-        Post created = postService.addPost(post);
+    public ResponseEntity<Tag> addTag(@RequestBody Tag tag){
+        Tag created = tagService.addTag(tag);
         return new ResponseEntity<>(created, CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Tag> updateTag(@PathVariable(value = "id") Long id, @RequestBody Tag tag){
+        Optional<Tag> existingTag = tagService.getTagById(id);
+
+        if (existingTag.isPresent()) {
+            Tag updatedTag = tagService.updateTag(id, tag);
+            return new ResponseEntity<>(updatedTag, OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTag(@PathVariable(value = "id") Long id){
+        Optional<Tag> tag = tagService.getTagById(id);
+
+        if (tag.isPresent()) {
+            tagService.deleteTag(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
