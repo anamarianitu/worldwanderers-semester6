@@ -22,6 +22,9 @@ public class GatewayConfig {
                 .route(r -> r.path("/comments/**")
                         .filters(f -> f.filter(filterFunction()))
                         .uri("lb://comment-service"))
+                .route(r -> r.path("/tags/**")
+                        .filters(f -> f.filter(filterFunction()))
+                        .uri("lb://post-service"))
                 .build();
 
     }
