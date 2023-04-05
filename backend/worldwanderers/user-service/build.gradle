@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.backend'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.4'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.postgresql:postgresql:42.5.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'junit:junit:4.13.1'
+    implementation 'org.mockito:mockito-core:4.0.0'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -20,6 +20,9 @@ public class Post {
     @Column(name="description")
     private String description;
 
+    @Column(name="user_id")
+    private Long userId;
+
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
@@ -41,6 +44,11 @@ public class Post {
         this.id = id;
         this.description = description;
     }
+    public Post(Long id, String description, Set<Tag> tags) {
+        this.id = id;
+        this.description = description;
+        this.tags = tags;
+    }
 
     public Long getId() {
         return this.id;
@@ -56,6 +64,30 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
     }
 
     @Override
