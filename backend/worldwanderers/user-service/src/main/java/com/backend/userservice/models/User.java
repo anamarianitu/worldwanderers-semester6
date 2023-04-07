@@ -1,33 +1,34 @@
 package com.backend.userservice.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.*;
-import java.util.Objects;
-
-@Entity
-@Table(name="users")
+@Document
+@Data
+@NoArgsConstructor
 public class User {
-
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    @Column(name="first_name")
-    private String firstName;
-
-    @Column(name="last_name")
-    private String lastName;
-
-    @Column(name="username")
+    @NonNull
     private String username;
 
-    @Column(name="email")
+    @NonNull
+    private String firstName;
+
+    @NonNull
+    private String lastName;
+
+    @NonNull
     private String email;
 
-    @Column(name="password")
+    @NonNull
     private String password;
 
-    public User(Long id, String firstName, String lastName, String username, String email, String password) {
+    public User(String id, String firstName, String lastName, String username, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,11 +37,7 @@ public class User {
         this.password = password;
     }
 
-    public User() {
-
-    }
-
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,7 +61,7 @@ public class User {
         this.password = password;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -86,34 +83,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-
-        return Objects.equals(this.id, other.id);
-    }
-
-    @Override
-    public String toString() {
-
-        var builder = new StringBuilder();
-        builder.append("User{id=").append(id).append(", header=")
-                .append(firstName).append(", firstName=")
-                .append(lastName).append(", lastName=")
-                .append(username).append(", username=")
-                .append(email).append(", email=");
-        return builder.toString();
     }
 }
 
