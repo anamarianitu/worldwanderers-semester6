@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUserById(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Optional<User>> getUserById(@PathVariable(value = "id") String id){
         Optional<User> user = userService.getUserById(id);
 
         if (user.isPresent()) {
