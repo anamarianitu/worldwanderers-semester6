@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  discovery-service:
+    image: ww_discovery_service:v1.0
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    image: ww_api_gateway:v1.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-service
+
+  comment-service:
+    image: ww_comment_service:v1.0
+    ports:
+      - "8085:8085"
+    depends_on:
+      - api-gateway
+
+  group-service:
+    image: ww_group_service:v1.0
+    ports:
+      - "8087:8087"
+    depends_on:
+      - api-gateway
+
+  like-service:
+    image: ww_like_service:v1.0
+    ports:
+      - "8084:8084"
+    depends_on:
+      - api-gateway
+
+  post-service:
+    image: ww_post_service:v1.0
+    ports:
+      - "8081:8081"
+    depends_on:
+      - api-gateway
+
+  security-service:
+    image: ww_security_service:v1.0
+    ports:
+      - "8082:8082"
+    depends_on:
+      - api-gateway
+        
+  user-service:
+    image: ww_user_service:v1.0
+    ports:
+      - "8086:8086"
+    depends_on:
+      - api-gateway      
