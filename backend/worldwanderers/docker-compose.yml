@@ -13,12 +13,12 @@ services:
     depends_on:
       - discovery-service
 
-  comment-service:
-    image: ww_comment_service:v1.0
-    ports:
-      - "8085:8085"
-    depends_on:
-      - api-gateway
+#  comment-service:
+#    image: ww_comment_service:v1.0
+#    ports:
+#      - "8085:8085"
+#    depends_on:
+#      - api-gateway
 
   group-service:
     image: ww_group_service:v1.0
@@ -27,12 +27,12 @@ services:
     depends_on:
       - api-gateway
 
-  like-service:
-    image: ww_like_service:v1.0
-    ports:
-      - "8084:8084"
-    depends_on:
-      - api-gateway
+#  like-service:
+#    image: ww_like_service:v1.0
+#    ports:
+#      - "8084:8084"
+#    depends_on:
+#      - api-gateway
 
   post-service:
     image: ww_post_service:v1.0
