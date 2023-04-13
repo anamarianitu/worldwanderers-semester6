@@ -1,7 +1,5 @@
 rootProject.name = 'worldwanderers'
 include 'post-service'
-include 'like-service'
-include 'comment-service'
 include 'discovery-service'
 include 'api-gateway'
 include 'user-service'
