@@ -32,7 +32,8 @@ sonarqube-check-job:
       - .sonar/cache
   script: 
     - cd backend
-    - cd worldwanderers 
+    - cd worldwanderers
+    - curl -v http://localhost:9000/api/system/status
     - ./gradlew sonar
   allow_failure: true
   only:
