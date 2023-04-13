@@ -33,7 +33,7 @@ sonarqube-check-job:
   script: 
     - cd backend
     - cd worldwanderers 
-    - gradle sonar
+    - ./gradlew sonar
   allow_failure: true
   only:
     - main
