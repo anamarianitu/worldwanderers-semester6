@@ -32,6 +32,7 @@ sonar {
 		property "sonar.projectKey", "WorldWanderers"
 		property "sonar.projectName", "WorldWanderers"
 		property "sonar.qualitygate.wait", true
+		property "sonar.login", "sqp_5920bf7387f919d3a662237c3f2caf9eb79e831d"
 		property "sonar.host.url", "http://127.0.0.1:9000"
 	}
 }
