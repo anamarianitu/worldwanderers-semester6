@@ -32,5 +32,6 @@ sonar {
 		property "sonar.projectKey", "WorldWanderers"
 		property "sonar.projectName", "WorldWanderers"
 		property "sonar.qualitygate.wait", true
+		property "sonar.host.url", "http://127.0.0.1:9000"
 	}
 }
