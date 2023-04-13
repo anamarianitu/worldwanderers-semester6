@@ -1,7 +1,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
-  - deploy
+  # - deploy
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -19,15 +19,15 @@ backend-test-job:   # This job runs in the test stage.
     - ./gradlew test
     - echo "Successfully passed tests"
 
-deploy-job:
-  stage: deploy 
-  image: docker/compose:1.29.2  
-  script:
-    - cd backend
-    - cd worldwanderers 
-    - echo "Deploying the application..."
-    - docker-compose up -d
-  environment:
-    name: production
-  only:
-    - main
+# deploy-job:
+#   stage: deploy 
+#   image: docker/compose:1.29.2  
+#   script:
+#     - cd backend
+#     - cd worldwanderers 
+#     - echo "Deploying the application..."
+#     - docker-compose up -d
+#   environment:
+#     name: production
+#   only:
+#     - main
