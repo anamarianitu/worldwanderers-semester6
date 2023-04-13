@@ -20,8 +20,7 @@ backend-test-job:   # This job runs in the test stage.
     - ./gradlew test
     - echo "Successfully passed tests"
 
-sonarqube-check-job:
-  stage: sonarqube-check
+sonarqube-check:
   image: gradle:jre17-slim
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
@@ -31,12 +30,12 @@ sonarqube-check-job:
     paths:
       - .sonar/cache
   script: 
-  - cd backend
-  - cd worldwanderers
-  - ./gradlew sonar
+    - cd backend
+    - cd worldwanderers 
+    - gradle sonar
   allow_failure: true
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
+  only:
+    - main
 
 # deploy-job:
 #   stage: deploy 
