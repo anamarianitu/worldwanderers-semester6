@@ -34,7 +34,7 @@ sonarqube-check-job:
     - cd backend
     - cd worldwanderers
     # - ./gradlew sonar
-    - gradle sonar -Dsonar.login=admin -Dsonar.password=laura241189L
+    - ./gradlew sonar -Dsonar.login=admin -Dsonar.password=laura241189L
   allow_failure: true
   only:
     - main
