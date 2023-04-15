@@ -29,7 +29,9 @@ sonarqube-job:
     key: "${CI_JOB_NAME}"
     paths:
       - .sonar/cache
-  script: ./gradlew sonar
+  script:
+    - cd backend/worldwanderers 
+    - ./gradlew sonar
   allow_failure: true
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
