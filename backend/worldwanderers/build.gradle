@@ -32,5 +32,6 @@ sonar {
 		property "sonar.projectKey", "world-wanderers"
 		property "sonar.projectName", "world-wanderers"
 		property "sonar.qualitygate.wait", true
+		property "sonar.login", "sqp_c2a473d9a210bc032c27834ed823b6ed01962772"
 	}
 }
