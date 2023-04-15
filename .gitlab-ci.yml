@@ -31,7 +31,8 @@ sonarqube-job:
       - .sonar/cache
   script:
     - cd backend/worldwanderers 
-    - gradle sonar
+    - ./gradlew sonar
+    - ./gradlew.bat --stop
   allow_failure: true
   only:
     - main
