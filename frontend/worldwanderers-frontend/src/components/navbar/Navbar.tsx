@@ -18,6 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from '@mui/material';
 import { pages } from './NavbarData';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../services/auth-service';
 
 const drawerWidth = 240;
 
@@ -73,6 +75,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NavigationBar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const token = useSelector((state: any) => state.authentication.token);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -82,20 +86,26 @@ export default function NavigationBar() {
     setOpen(false);
   };
 
+  const handleLogout = () => {
+      dispatch(logout());
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{backgroundColor: '#37306B'}}>
         <Toolbar>
+        {token && (
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            <MenuIcon />
+              <MenuIcon />
           </IconButton>
+        )}
           <Typography variant="h6" noWrap component="div">
           <Box
             component="img"

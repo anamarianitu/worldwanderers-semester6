@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import NavigationBar from './components/navbar/Navbar';
 import Feed from './pages/feed/Feed';
+import Login from './pages/authenticate/Login';
+import ProtectedRoute from './services/require.auth';
 
 function App() {
   return (
@@ -10,7 +12,24 @@ function App() {
     <NavigationBar/>
     <BrowserRouter>
       <Routes>
-      <Route path = "/feed" element={<Feed/>}></Route>
+      <Route
+        path="/feed"
+        element={
+            <ProtectedRoute>
+                <Feed />
+            </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/"
+        element={
+            <ProtectedRoute>
+                <Feed />
+            </ProtectedRoute>
+        }
+      />
+
+      <Route path = "/log-in" element={<Login/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>
