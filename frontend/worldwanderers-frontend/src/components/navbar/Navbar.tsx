@@ -95,24 +95,17 @@ export default function NavigationBar() {
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{backgroundColor: '#37306B'}}>
         <Toolbar>
-        {token && (
           <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 3, ...(open && { display: 'none' }) }}
           >
-              <MenuIcon />
+            <MenuIcon />
           </IconButton>
-        )}
-          <Typography variant="h6" noWrap component="div">
-          <Box
-            component="img"
-            alt="WorldWanderers"
-            // src={Logo}
-            style={{width: '100px'}}
-        />
+          <Typography variant="h3" noWrap component="div">
+          <p style={{fontFamily: 'Dancing Script', fontSize: '24px'}}>WorldWanderers</p>
           </Typography>
         </Toolbar>
       </AppBar>

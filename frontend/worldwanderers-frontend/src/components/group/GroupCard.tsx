@@ -13,6 +13,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+
 import { Stack, Box } from '@mui/material';
 
 
@@ -38,6 +42,7 @@ interface GroupCardProps {
   }));
 
 
+
 const GroupCard: React.FC<GroupCardProps> = ({
     title,
     description,
@@ -46,10 +51,16 @@ const GroupCard: React.FC<GroupCardProps> = ({
 
 
   const [expanded, setExpanded] = React.useState(false);
+  const navigate = useNavigate();
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const navigateToGroup = () => {
+    navigate('/group');
+};
 
     return (
         <Card sx={{ elevation: 10 }}>
@@ -60,9 +71,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            <Button onClick={navigateToGroup} color="secondary">View Group</Button>
           }
           title={title}
           subheader="September 14, 2016"

@@ -5,6 +5,7 @@ import NavigationBar from './components/navbar/Navbar';
 import Feed from './pages/feed/Feed';
 import Login from './pages/authenticate/Login';
 import ProtectedRoute from './services/require.auth';
+import Group from './pages/group/Group';
 
 function App() {
   return (
@@ -15,17 +16,25 @@ function App() {
       <Route
         path="/feed"
         element={
-            <ProtectedRoute>
-                <Feed />
-            </ProtectedRoute>
+          <ProtectedRoute>
+              <Feed />
+          </ProtectedRoute>
         }
       />
       <Route
         path="/"
+      element={
+          <ProtectedRoute>
+              <Feed />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/group"
         element={
-            <ProtectedRoute>
-                <Feed />
-            </ProtectedRoute>
+          <ProtectedRoute>
+              <Group />
+          </ProtectedRoute>
         }
       />
 
