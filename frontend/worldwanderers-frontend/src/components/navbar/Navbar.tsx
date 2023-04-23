@@ -18,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from '@mui/material';
 import { pages } from './NavbarData';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../services/auth-service';
 
 const drawerWidth = 240;
@@ -76,7 +76,6 @@ export default function NavigationBar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
-  const token = useSelector((state: any) => state.authentication.token);
 
   const handleDrawerOpen = () => {
     setOpen(true);

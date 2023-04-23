@@ -6,11 +6,15 @@ import Feed from './pages/feed/Feed';
 import Login from './pages/authenticate/Login';
 import ProtectedRoute from './services/require.auth';
 import Group from './pages/group/Group';
+import { useSelector } from "react-redux";
+
 
 function App() {
+  const user = useSelector((state: any) => state.authentication.authenticated);
+
   return (
     <div className="App">
-    <NavigationBar/>
+    { user ? <NavigationBar/> : null }
     <BrowserRouter>
       <Routes>
       <Route
