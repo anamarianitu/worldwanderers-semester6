@@ -40,6 +40,7 @@ const Login = (props: any) => {
                 .then((response: any) => {
                     dispatch(
                         authenticationSuccess(
+                            response.userId,
                             response.accessToken,
                             response.refreshToken
                         )

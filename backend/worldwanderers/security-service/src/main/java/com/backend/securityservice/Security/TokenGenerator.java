@@ -4,6 +4,7 @@ package com.backend.securityservice.Security;
 import com.backend.securityservice.Dto.TokenDTO;
 import com.backend.securityservice.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -24,6 +25,7 @@ public class TokenGenerator {
     JwtEncoder accessTokenEncoder;
 
     @Autowired
+    @Qualifier("jwtRefreshTokenEncoder")
     JwtEncoder refreshTokenEncoder;
 
     private String createAccessToken(Authentication authentication) {

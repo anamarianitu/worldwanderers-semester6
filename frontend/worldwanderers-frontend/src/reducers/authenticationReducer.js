@@ -1,5 +1,6 @@
 const initialState = {
   authenticated: false,
+  userId: null,
   token: null,
   refreshToken: null,
   error: null,
@@ -11,6 +12,7 @@ const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: true,
+        userId: action.payload.userId,
         token: action.payload.token,
         refreshToken: action.payload.refreshToken,
         error: null,
@@ -19,6 +21,7 @@ const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: false,
+        userId: null,
         token: null,
         refreshToken: null,
         error: action.payload,

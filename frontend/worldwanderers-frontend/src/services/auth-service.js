@@ -14,6 +14,7 @@ export const authenticateUser = (username, password) => {
         if (response.data) {
           dispatch(
             authenticationSuccess(
+              response.data.userId,
               response.data.accessToken,
               response.data.refreshToken
             )
@@ -28,22 +29,15 @@ export const authenticateUser = (username, password) => {
   };
 };
 
-export const refreshToken = (refreshToken) => {
+export const tokenRefresh = (refreshToken) => {
   return (dispatch) => {
     return axios
-      .post(
-        API_URL + "token",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        }
-      )
+      .post(API_URL + "token", { refreshToken })
       .then((response) => {
         if (response.data) {
           dispatch(
             authenticationSuccess(
+              response.data.userId,
               response.data.accessToken,
               response.data.refreshToken
             )
@@ -51,6 +45,7 @@ export const refreshToken = (refreshToken) => {
         }
       })
       .catch((error) => {
+        console.log(error.message);
         dispatch(authenticationFailure(error.message));
       });
   };
@@ -58,14 +53,15 @@ export const refreshToken = (refreshToken) => {
 
 const startTokenRefresh = (refreshToken) => {
   setInterval(() => {
-    store.dispatch(refreshToken(refreshToken));
+    store.dispatch(tokenRefresh(refreshToken));
   }, 240000);
 };
 
-export const authenticationSuccess = (token, refreshToken) => {
+export const authenticationSuccess = (userId, token, refreshToken) => {
+  console.log(userId);
   return {
     type: "AUTHENTICATION_SUCCESS",
-    payload: { token, refreshToken },
+    payload: { userId, token, refreshToken },
   };
 };
 
