@@ -19,7 +19,7 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Comment>> getCommentById(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Optional<Comment>> getCommentById(@PathVariable(value = "id") String id){
         Optional<Comment> comment = commentService.getCommentById(id);
 
         if (comment.isPresent()) {
@@ -42,7 +42,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<String> removeComment(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<String> removeComment(@PathVariable(value = "id") String id) {
         try {
             boolean removed = commentService.removeComment(id);
             if (removed) {
@@ -56,7 +56,7 @@ public class CommentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable("id") Long id, @RequestBody Comment updatedComment) throws CommentNotFound {
+    public ResponseEntity<Comment> updateComment(@PathVariable("id") String id, @RequestBody Comment updatedComment) throws CommentNotFound {
         Optional<Comment> existingComment = commentService.getCommentById(id);
         if(existingComment.isPresent())
         {

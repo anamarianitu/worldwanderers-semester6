@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class PostTest {
     public Post post;
-    public static final Long POST_ID = 1L;
+    public static final String POST_ID = "1a2b";
     public static final String DESCRIPTION = "DESCRIPTION";
 
     @BeforeEach
@@ -27,7 +27,7 @@ public class PostTest {
     public void setIdTest()
     {
         //arrange
-        Long newId = 2L;
+        String newId = "1a2b3c";
         //act
         post.setId(newId);
         //assert

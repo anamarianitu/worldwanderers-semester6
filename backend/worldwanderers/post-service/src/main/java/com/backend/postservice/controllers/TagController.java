@@ -25,7 +25,7 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Tag>> getTagById(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Optional<Tag>> getTagById(@PathVariable(value = "id") String id){
         Optional<Tag> tag = tagService.getTagById(id);
 
         if (tag.isPresent()) {
@@ -42,7 +42,7 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tag> updateTag(@PathVariable(value = "id") Long id, @RequestBody Tag tag){
+    public ResponseEntity<Tag> updateTag(@PathVariable(value = "id") String id, @RequestBody Tag tag){
         Optional<Tag> existingTag = tagService.getTagById(id);
 
         if (existingTag.isPresent()) {
@@ -54,7 +54,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Void> deleteTag(@PathVariable(value = "id") String id){
         Optional<Tag> tag = tagService.getTagById(id);
 
         if (tag.isPresent()) {

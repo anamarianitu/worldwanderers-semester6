@@ -2,59 +2,43 @@ package com.backend.postservice.models;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table(name="posts")
+@Document
+@Data
+@NoArgsConstructor
 public class Post {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    @Column(name="description")
     private String description;
 
-    @Column(name="user_id")
-    private Long userId;
+    private String userId;
 
-    @Column(name="created_at")
+    private String groupId;
+
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "post_tags",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags = new HashSet<>();
-
-    public Post() {
-
-    }
-
-    public Post(Long id, String description) {
+    public Post(String id, String description, String groupId, String userId) {
         this.id = id;
         this.description = description;
-    }
-    public Post(Long id, String description, Set<Tag> tags) {
-        this.id = id;
-        this.description = description;
-        this.tags = tags;
+        this.groupId = groupId;
+        this.userId = userId;
     }
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,6 +48,22 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getGroupId() {
+        return this.groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -80,14 +80,6 @@ public class Post {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
     }
 
     @Override

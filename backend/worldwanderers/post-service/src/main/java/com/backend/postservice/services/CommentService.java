@@ -15,7 +15,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public Optional<Comment> getCommentById(Long id){
+    public Optional<Comment> getCommentById(String id){
         return commentRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public boolean removeComment(Long id) throws CommentNotFound {
+    public boolean removeComment(String id) throws CommentNotFound {
         Optional<Comment> comment = commentRepository.findById(id);
         if (comment.isPresent()) {
             commentRepository.deleteById(id);
@@ -39,7 +39,7 @@ public class CommentService {
         }
     }
 
-    public Comment updateComment(Long id, String content) throws CommentNotFound {
+    public Comment updateComment(String id, String content) throws CommentNotFound {
         Optional<Comment> optionalComment = commentRepository.findById(id);
         if (optionalComment.isPresent()) {
             Comment commentToUpdate = optionalComment.get();

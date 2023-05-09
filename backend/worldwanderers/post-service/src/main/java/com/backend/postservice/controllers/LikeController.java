@@ -19,7 +19,7 @@ public class LikeController {
     private LikeService likeService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Like>> getLikeById(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Optional<Like>> getLikeById(@PathVariable(value = "id") String id){
         Optional<Like> like = likeService.getLikeById(id);
 
         if (like != null) {
@@ -41,7 +41,7 @@ public class LikeController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<String> removeLike(@PathVariable(value = "id") Long id){
+    public ResponseEntity<String> removeLike(@PathVariable(value = "id") String id){
         boolean removed = likeService.removeLike(id);
         if(removed) {
             return ResponseEntity.ok("Removed successfully.");

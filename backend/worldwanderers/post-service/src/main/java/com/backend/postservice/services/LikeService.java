@@ -14,8 +14,7 @@ public class LikeService {
     @Autowired
     private LikeRepository likeRepository;
 
-
-    public Optional<Like> getLikeById(Long id){
+    public Optional<Like> getLikeById(String id){
         return likeRepository.findById(id);
     }
 
@@ -29,7 +28,7 @@ public class LikeService {
         return likeRepository.save(like);
     }
 
-    public boolean removeLike(Long likeId)
+    public boolean removeLike(String likeId)
     {
         try {
             likeRepository.deleteById(likeId);

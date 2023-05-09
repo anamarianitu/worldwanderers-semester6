@@ -1,36 +1,34 @@
 package com.backend.postservice.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
-@Entity
-@Table(name="likes")
+@Document
+@Data
+@NoArgsConstructor
 public class Like {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name="post_id")
-    private Long postId;
+    private String postId;
 
-    public Like(Long id, Long postId) {
+    public Like(String id, String postId) {
         this.id = id;
         this.postId = postId;
     }
 
-    public Like() {
+    public String getId() { return id; }
 
-    }
+    public void setId(String id) { this.id = id; }
 
-    public Long getId() { return id; }
+    public String getPostId() { return postId; }
 
-    public void setId(Long id) { this.id = id; }
-
-    public Long getPostId() { return postId; }
-
-    public void setPostId(Long postId) { this.postId = postId; }
+    public void setPostId(String postId) { this.postId = postId; }
 
     @Override
     public boolean equals(Object o) {
