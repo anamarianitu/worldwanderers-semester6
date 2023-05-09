@@ -39,4 +39,8 @@ public class GroupController {
         Group created = groupService.addGroup(group);
         return new ResponseEntity<>(created, CREATED);
     }
+    @PutMapping("/update")
+    public ResponseEntity<Group> updateUserById(@RequestParam String id, @RequestParam Long destinationId, @RequestParam String title, @RequestParam String description) {
+        return ResponseEntity.ok(groupService.updateGroup(id, destinationId, title, description));
+    }
 }

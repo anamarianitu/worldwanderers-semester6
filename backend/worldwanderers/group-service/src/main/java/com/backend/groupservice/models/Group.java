@@ -2,7 +2,6 @@ package com.backend.groupservice.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,14 +16,17 @@ public class Group {
 
     private Long destinationId;
 
+    private String title;
+
     private String description;
 
     private List<String> userIds;
 
-    public Group(String id, Long destinationId, String description) {
+    public Group(String id, String title, Long destinationId, String description) {
         this.id = id;
         this.destinationId = destinationId;
         this.description = description;
+        this.title = title;
     }
 
     public void setId(String id) {
@@ -37,6 +39,10 @@ public class Group {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setUserIds(List<String> userIds) {
@@ -53,6 +59,10 @@ public class Group {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public List<String> getUserIds() {
