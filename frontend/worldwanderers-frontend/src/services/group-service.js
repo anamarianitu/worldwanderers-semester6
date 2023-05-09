@@ -16,18 +16,19 @@ class GroupService {
     });
   }
 
-  getGroupsFromUser(user_id) {
+  getGroupById(id) {
     return new Promise((resolve) => {
       axios
-        .get(`${API_URL}/${user_id}`)
+        .get(`${API_URL}/${id}`, { params: { id: id } })
         .then((response) => {
           resolve(response.data);
         })
         .catch(() => {
-          resolve([]);
+          resolve(null);
         });
     });
   }
+
 }
 
 export default new GroupService();

@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { GroupEntity } from '../../types/api';
 import groupService from '../../services/group-service';
 
-const Feed = () => {
+const Groups = () => {
 
 const [groups, setGroups] = useState<GroupEntity[] | []>([]);
 
@@ -46,4 +46,4 @@ useEffect(() => {
   );
 };
 
-export default Feed;
+export default Groups;
