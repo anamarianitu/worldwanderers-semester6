@@ -3,6 +3,7 @@ package com.backend.postservice.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
@@ -14,8 +15,11 @@ public class Comment {
 
     @Id
     private String id;
+    @NonNull
     private String postId;
+    @NonNull
     private String userId;
+    @NonNull
     private String comment;
 
     public Comment(String id, String postId, String userId, String comment) {

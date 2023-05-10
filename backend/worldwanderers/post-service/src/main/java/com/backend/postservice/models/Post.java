@@ -4,6 +4,7 @@ package com.backend.postservice.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -17,8 +18,9 @@ public class Post {
     @Id
     private String id;
 
+    @NonNull
     private String description;
-
+    @NonNull
     private String userId;
 
     private String groupId;

@@ -43,6 +43,7 @@ const PostCard = ({
   const [likes, setLikes] = useState<Like[]>([]);
   const [isLiked, setIsLiked] = useState();
   const [comments, setComments] = useState<Comment[]>([]);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,8 +86,15 @@ const PostCard = ({
     }
   };
 
+  const handleCommentInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setComment(value);
+  };
 
-
+  const handleAddComment = async () => {
+    const newComment = await commentService.addNewComment(postId, loggedInUserId, comment);
+    setComments((prevComments) => [...prevComments, newComment]);
+  };
 
   return (
     <Card
@@ -185,9 +193,11 @@ const PostCard = ({
           variant="plain"
           size="sm"
           placeholder="Add a comment…"
+          value={comment}
+          onChange={handleCommentInputChange}
           sx={{ flexGrow: 1, mr: 1, '--Input-focusedThickness': '0px' }}
         />
-        <Button>
+        <Button onClick={handleAddComment}>
           Comment
         </Button>
       </CardOverflow>

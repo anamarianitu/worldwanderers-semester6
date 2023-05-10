@@ -14,11 +14,21 @@ class CommentService {
           resolve([]);
         });
     });
-  }
+    }
 
-  addNewComment(postId, userId) {
-
-  }
+  addNewComment(postId, userId, comment) {
+    const newComment = { postId, userId, comment };
+    return new Promise((resolve) => {
+        axios
+            .post(`${API_URL}/add`, newComment)
+            .then((response) => {
+                resolve(response.data);
+            })
+            .catch(() => {
+                resolve(null);
+            });
+    });
+    }
 }
 
 export default new CommentService();

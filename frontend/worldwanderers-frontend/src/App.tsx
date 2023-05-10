@@ -12,11 +12,11 @@ import Signup from './pages/authenticate/Signup';
 
 
 function App() {
-  const user = useSelector((state: any) => state.authentication.authenticated);
+  const token = useSelector((state: any) => state.authentication.token);
 
   return (
     <div className="App">
-    { user ? <NavigationBar/> : null }
+    { token && <NavigationBar/> }
     <BrowserRouter>
       <Routes>
       <Route
