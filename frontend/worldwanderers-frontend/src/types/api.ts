@@ -20,4 +20,10 @@ export interface Comment {
     userId: string;
     postId: string;
     comment: string;
-  }
+}
+
+export interface Like {
+    id: string;
+    userId: string;
+    postId: string;
+}

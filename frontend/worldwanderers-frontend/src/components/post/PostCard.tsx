@@ -13,6 +13,7 @@ import MoreHoriz from '@mui/icons-material/MoreHoriz';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Face from '@mui/icons-material/Face';
 import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
+import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import postImg from '../../assets/images-groups/bucharest.jpg'
 import { Button } from '@mui/material';
 import { useState, useEffect } from 'react';
@@ -21,7 +22,9 @@ import likeService from '../../services/like-service';
 import commentService from '../../services/comment-service';
 import userService from '../../services/user-service';
 import CommentSection from './CommentSection';
-import { Comment } from '../../types/api';
+import { Comment, Like } from '../../types/api';
+import { useSelector } from 'react-redux';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 interface PostCardProps {
   postId: string;
@@ -35,37 +38,54 @@ const PostCard = ({
   description,
 }: PostCardProps) => {
 
+  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
   const [username, setUsername] = useState("");
-  const [likes, setLikes] = useState([]);
+  const [likes, setLikes] = useState<Like[]>([]);
   const [isLiked, setIsLiked] = useState();
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userData, likesData, commentsData] = await Promise.all([
+        const [userData, likesData, commentsData, isLikedData] = await Promise.all([
           userService.getUserById(userId),
           likeService.getAllLikesByPostId(postId),
-          commentService.getAllCommentsByPostId(postId)
+          commentService.getAllCommentsByPostId(postId),
+          likeService.isPostLikedByUser(postId, loggedInUserId)
         ]);
 
         if (userData) {
           setUsername(userData.username);
         }
-
         setLikes(likesData);
         setComments(commentsData);
+        console.log(loggedInUserId);
+        setIsLiked(isLikedData);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, [postId, userId]);
+  }, [loggedInUserId, postId, userId]);
 
-  const test = () => {
-    console.log(comments);
+  const handleLikeClick = async () => {
+    if (!isLiked) {
+      const newLike = await likeService.addNewLike(postId, userId);
+      if (newLike) {
+        setIsLiked(newLike);
+        setLikes((prevLikes) => [...prevLikes, newLike]);
+      }
+    } else {
+      const removed = await likeService.removeLike(postId, userId);
+      if (removed) {
+        setIsLiked(undefined);
+        setLikes((prevLikes) => prevLikes.filter((like) => like.userId !== userId || like.postId !== postId));
+      }
+    }
   };
+
+
 
 
   return (
@@ -76,7 +96,6 @@ const PostCard = ({
         '--Card-radius': (theme: any) => theme.vars.radius.xs,
       }}
     >
-      <Button onClick={test}>test</Button>
       <Box sx={{ display: 'flex', alignItems: 'center', pb: 1.5, gap: 1 }}>
         <Box
           sx={{
@@ -113,16 +132,22 @@ const PostCard = ({
       </CardOverflow>
       <Box sx={{ display: 'flex', alignItems: 'center', mx: -1, my: 1 }}>
         <Box sx={{ width: 0, display: 'flex', gap: 0.5 }}>
-          <IconButton variant="plain" color="neutral" size="sm">
-            <FavoriteBorder />
-          </IconButton>
+        <IconButton
+            variant="plain"
+            color="neutral"
+            size="sm"
+            onClick={handleLikeClick}
+            value={isLiked}
+        >
+            {isLiked ? <FavoriteIcon sx={{ color: 'red' }} /> : <FavoriteBorder />}
+        </IconButton>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mx: 'auto' }}>
         </Box>
         <Box sx={{ width: 0, display: 'flex', flexDirection: 'row-reverse' }}>
           <IconButton variant="plain" color="neutral" size="sm">
             <BookmarkBorderRoundedIcon />
-          </IconButton>
+        </IconButton>
         </Box>
       </Box>
       <Link
@@ -151,18 +176,6 @@ const PostCard = ({
           <CommentSection key={comment.id} userId={comment.userId} comment={comment.comment} ></CommentSection>
         ))
       }
-
-      <Typography fontSize="sm" textAlign="left">
-        <Link
-          component="button"
-          color="neutral"
-          fontWeight="lg"
-          textColor="text.primary"
-        >
-          {username}
-        </Link>{' '}
-        {description}
-      </Typography>
 
       <CardOverflow sx={{ p: 'var(--Card-padding)', display: 'flex' }}>
         <IconButton size="sm" variant="plain" color="neutral" sx={{ ml: -1 }}>

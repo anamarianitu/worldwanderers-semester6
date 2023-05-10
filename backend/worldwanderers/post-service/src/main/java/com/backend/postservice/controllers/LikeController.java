@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
@@ -34,6 +35,15 @@ public class LikeController {
         return new ResponseEntity<>(likeService.getLikesByPostId(postId), OK);
 
     }
+
+    @GetMapping("/liked-by")
+    public ResponseEntity<Boolean> isPostLikedByUser(@RequestParam("postId") String postId,
+                                                     @RequestParam("userId") String userId) {
+
+        Boolean isLiked = likeService.isPostLikedByUser(postId, userId);
+
+        return new ResponseEntity<>(isLiked, OK);
+    }
     @GetMapping("/")
     public ResponseEntity<List<Like>> getAllLikes(){
         return new ResponseEntity<>(likeService.getAllLikes(), OK);
@@ -45,9 +55,11 @@ public class LikeController {
         return new ResponseEntity<>(created, CREATED);
     }
 
-    @DeleteMapping("/remove/{id}")
-    public ResponseEntity<String> removeLike(@PathVariable(value = "id") String id){
-        boolean removed = likeService.removeLike(id);
+    @DeleteMapping("/remove")
+    public ResponseEntity<String> removeLike(@RequestParam("postId") String postId,
+                                             @RequestParam("userId") String userId){
+
+        boolean removed = likeService.removeLike(postId, userId);
         if(removed) {
             return ResponseEntity.ok("Removed successfully.");
         } else {

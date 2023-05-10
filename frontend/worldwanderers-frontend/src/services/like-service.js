@@ -14,11 +14,48 @@ class LikeService {
           resolve([]);
         });
     });
-  }
+    }
 
-  addNewLike(postId, userId) {
+    isPostLikedByUser(postId, userId) {
+        return new Promise((resolve) => {
+            axios
+                .get(`${API_URL}/liked-by?postId=${postId}&userId=${userId}`)
+                .then((response) => {
+                    resolve(response.data);
+                    console.log(response.data);
+                })
+                .catch(() => {
+                    resolve(false);
+                });
+        });
+    }
 
-  }
+    addNewLike(postId, userId) {
+        const newLike = { postId, userId };
+        return new Promise((resolve) => {
+            axios
+                .post(`${API_URL}/add`, newLike)
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch(() => {
+                    resolve(null);
+                });
+        });
+    }
+
+    removeLike(postId, userId) {
+        return new Promise((resolve) => {
+            axios
+                .delete(`${API_URL}/remove?postId=${postId}&userId=${userId}`)
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch(() => {
+                    resolve(null);
+                });
+        });
+    }
 }
 
 export default new LikeService();
