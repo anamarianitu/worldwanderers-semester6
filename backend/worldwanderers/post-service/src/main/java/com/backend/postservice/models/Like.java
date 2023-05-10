@@ -17,9 +17,12 @@ public class Like {
 
     private String postId;
 
-    public Like(String id, String postId) {
+    private String userId;
+
+    public Like(String id, String postId, String userId) {
         this.id = id;
         this.postId = postId;
+        this.userId = userId;
     }
 
     public String getId() { return id; }
@@ -29,6 +32,10 @@ public class Like {
     public String getPostId() { return postId; }
 
     public void setPostId(String postId) { this.postId = postId; }
+
+    public String getUserId() { return userId; }
+
+    public void setUserId(String postId) { this.userId = userId; }
 
     @Override
     public boolean equals(Object o) {

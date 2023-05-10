@@ -27,6 +27,11 @@ public class LikeController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/post/{id}")
+    public ResponseEntity<List<Like>> getLikesByPostId(@PathVariable(value = "id") String postId){
+        return new ResponseEntity<>(likeService.getLikesByPostId(postId), OK);
 
     }
     @GetMapping("/")

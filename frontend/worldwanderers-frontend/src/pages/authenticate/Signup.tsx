@@ -11,9 +11,12 @@ import { authenticateUser, authenticationSuccess, authenticationFailure } from '
 import { useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
-const Login = (props: any) => {
+const Signup = (props: any) => {
     const [values, setValues] = useState({
         username: '',
+        email: '',
+        firstName: '',
+        lastName: '',
         password: '',
     });
 
@@ -68,10 +71,7 @@ const Login = (props: any) => {
                         variant="h2"
                         sx={{ fontSize: '3rem', fontWeight: 'bold' }}
                     >
-                        Welcome back!
-                    </Typography>
-                    <Typography variant="subtitle1" sx={{ fontSize: '17px' }}>
-                        Please enter your details
+                        Welcome to WorldWanderers!
                     </Typography>
                 </Box>
                 {submitted && !valid && (
@@ -117,6 +117,36 @@ const Login = (props: any) => {
                             />
                             <TextField
                                 margin="normal"
+                                id="email"
+                                label="Email"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                value={values.email}
+                                onChange={handleInputChange}
+                            />
+                            <TextField
+                                margin="normal"
+                                id="firstName"
+                                label="First Name"
+                                name="firstName"
+                                autoComplete="firstName"
+                                autoFocus
+                                value={values.firstName}
+                                onChange={handleInputChange}
+                            />
+                            <TextField
+                                margin="normal"
+                                id="lastName"
+                                label="Last Name"
+                                name="lastName"
+                                autoComplete="lastName"
+                                autoFocus
+                                value={values.lastName}
+                                onChange={handleInputChange}
+                            />
+                            <TextField
+                                margin="normal"
                                 name="password"
                                 label="Password"
                                 type="password"
@@ -152,7 +182,7 @@ const Login = (props: any) => {
                             }}
                         >
                             <Link
-                                href="/sign-up"
+                                href="/log-in"
                                 variant="body2"
                                 style={{
                                     textDecoration: 'none',
@@ -161,9 +191,10 @@ const Login = (props: any) => {
                                     marginTop: '2%',
                                 }}
                             >
-                                {'Go to Sign up'}
+                                {'Log in'}
                             </Link>
                         </Box>
+
                         <Button
                             type="submit"
                             variant="contained"
@@ -194,4 +225,4 @@ const mapDispatchToProps = {
     authenticateUser,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Signup);

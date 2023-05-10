@@ -62,6 +62,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
 
   const navigateToGroup = () => {
     alert(id);
+    //get the id of the group from this navigate
     navigate(`/groups/${id}`);
 };
 

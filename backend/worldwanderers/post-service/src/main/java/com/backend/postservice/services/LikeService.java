@@ -1,11 +1,14 @@
 package com.backend.postservice.services;
 
 import com.backend.postservice.models.Like;
+import com.backend.postservice.models.Post;
 import com.backend.postservice.repositories.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -36,5 +39,17 @@ public class LikeService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public List<Like> getLikesByPostId(String postId){
+        List<Like> likesFromPost = new ArrayList<>();
+
+        getAllLikes().forEach(like -> {
+            if (Objects.equals(like.getPostId(), postId)) {
+                likesFromPost.add(like);
+            }
+        });
+
+        return likesFromPost;
     }
 }

@@ -2,11 +2,14 @@ package com.backend.postservice.services;
 
 import com.backend.postservice.exceptions.CommentNotFound;
 import com.backend.postservice.models.Comment;
+import com.backend.postservice.models.Like;
 import com.backend.postservice.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -48,5 +51,17 @@ public class CommentService {
         } else {
             throw new CommentNotFound("Comment not found with id: " + id);
         }
+    }
+
+    public List<Comment> getCommentsByPostId(String postId){
+        List<Comment> commentsFromPost = new ArrayList<>();
+
+        getAllComments().forEach(comment -> {
+            if (Objects.equals(comment.getPostId(), postId)) {
+                commentsFromPost.add(comment);
+            }
+        });
+
+        return commentsFromPost;
     }
 }

@@ -18,9 +18,10 @@ public class Comment {
     private String userId;
     private String comment;
 
-    public Comment(String id, String postId, String comment) {
+    public Comment(String id, String postId, String userId, String comment) {
         this.id = id;
         this.postId = postId;
+        this.userId = userId;
         this.comment = comment;
     }
 
@@ -31,6 +32,10 @@ public class Comment {
     public String getPostId() { return postId; }
 
     public void setPostId(String postId) { this.postId = postId; }
+
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getComment() { return comment; }
 
@@ -50,6 +55,7 @@ public class Comment {
         return "Content{" +
                 "id=" + id +
                 ", post id='" + postId + '\'' +
+                ", user id='" + userId + '\'' +
                 ", content='" + comment + '\'' +
                 '}';
     }

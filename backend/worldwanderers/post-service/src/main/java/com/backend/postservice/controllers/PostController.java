@@ -34,15 +34,15 @@ public class PostController {
         }
     }
 
-//    @GetMapping("/group/{id}")
-//    public ResponseEntity<List<Post>> getPostsFromGroup(@PathVariable(value = "id") String groupId){
-//        return new ResponseEntity<>(postService.getPostsFromGroup(groupId), OK);
-//    }
-//
-//    @GetMapping("/group/{id}")
-//    public ResponseEntity<List<Post>> getPostsOfUser(@PathVariable(value = "id") String userId){
-//        return new ResponseEntity<>(postService.getPostsOfUser(userId), OK);
-//    }
+    @GetMapping("/group/{id}")
+    public ResponseEntity<List<Post>> getPostsFromGroup(@PathVariable(value = "id") String groupId){
+        return new ResponseEntity<>(postService.getPostsFromGroup(groupId), OK);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Post>> getPostsOfUser(@PathVariable(value = "id") String userId){
+        return new ResponseEntity<>(postService.getPostsOfUser(userId), OK);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Post> addPost(@RequestBody Post post){

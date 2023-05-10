@@ -11,20 +11,63 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import MoreHoriz from '@mui/icons-material/MoreHoriz';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import ModeCommentOutlined from '@mui/icons-material/ModeCommentOutlined';
-import SendOutlined from '@mui/icons-material/SendOutlined';
 import Face from '@mui/icons-material/Face';
 import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
+import postImg from '../../assets/images-groups/bucharest.jpg'
+import { Button } from '@mui/material';
+import { useState, useEffect } from 'react';
+import postService from '../../services/post-service';
+import likeService from '../../services/like-service';
+import commentService from '../../services/comment-service';
+import userService from '../../services/user-service';
+import CommentSection from './CommentSection';
+import { Comment } from '../../types/api';
 
 interface PostCardProps {
-    username: string;
-    description: string;
+  postId: string;
+  userId: string;
+  description: string;
 }
 
-const PostCard: React.FC<PostCardProps> = ({
-    username,
-    description,
-}) => {
+const PostCard = ({
+  postId,
+  userId,
+  description,
+}: PostCardProps) => {
+
+  const [username, setUsername] = useState("");
+  const [likes, setLikes] = useState([]);
+  const [isLiked, setIsLiked] = useState();
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [userData, likesData, commentsData] = await Promise.all([
+          userService.getUserById(userId),
+          likeService.getAllLikesByPostId(postId),
+          commentService.getAllCommentsByPostId(postId)
+        ]);
+
+        if (userData) {
+          setUsername(userData.username);
+        }
+
+        setLikes(likesData);
+        setComments(commentsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [postId, userId]);
+
+  const test = () => {
+    console.log(comments);
+  };
+
+
   return (
     <Card
       variant="outlined"
@@ -33,6 +76,7 @@ const PostCard: React.FC<PostCardProps> = ({
         '--Card-radius': (theme: any) => theme.vars.radius.xs,
       }}
     >
+      <Button onClick={test}>test</Button>
       <Box sx={{ display: 'flex', alignItems: 'center', pb: 1.5, gap: 1 }}>
         <Box
           sx={{
@@ -64,19 +108,13 @@ const PostCard: React.FC<PostCardProps> = ({
       </Box>
       <CardOverflow>
         <AspectRatio>
-          <img src="/static/images/cards/yosemite.jpeg" alt="" loading="lazy" />
+          <img src={postImg} alt="" loading="lazy" />
         </AspectRatio>
       </CardOverflow>
       <Box sx={{ display: 'flex', alignItems: 'center', mx: -1, my: 1 }}>
         <Box sx={{ width: 0, display: 'flex', gap: 0.5 }}>
           <IconButton variant="plain" color="neutral" size="sm">
             <FavoriteBorder />
-          </IconButton>
-          <IconButton variant="plain" color="neutral" size="sm">
-            <ModeCommentOutlined />
-          </IconButton>
-          <IconButton variant="plain" color="neutral" size="sm">
-            <SendOutlined />
           </IconButton>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mx: 'auto' }}>
@@ -94,8 +132,26 @@ const PostCard: React.FC<PostCardProps> = ({
         fontWeight="lg"
         textColor="text.primary"
       >
-        8.1M Likes
+        {likes.length} Likes
       </Link>
+
+      <CommentSection key={userId} userId={userId} comment={description} ></CommentSection>
+
+      <Link
+        component="button"
+        underline="none"
+        fontSize="10px"
+        sx={{ color: 'text.tertiary', my: 0.5 }}
+      >
+        13 Jul 2022
+      </Link>
+
+      {
+        comments?.map((comment) => (
+          <CommentSection key={comment.id} userId={comment.userId} comment={comment.comment} ></CommentSection>
+        ))
+      }
+
       <Typography fontSize="sm" textAlign="left">
         <Link
           component="button"
@@ -107,14 +163,7 @@ const PostCard: React.FC<PostCardProps> = ({
         </Link>{' '}
         {description}
       </Typography>
-      <Link
-        component="button"
-        underline="none"
-        fontSize="10px"
-        sx={{ color: 'text.tertiary', my: 0.5 }}
-      >
-        13 Jul 2022
-      </Link>
+
       <CardOverflow sx={{ p: 'var(--Card-padding)', display: 'flex' }}>
         <IconButton size="sm" variant="plain" color="neutral" sx={{ ml: -1 }}>
           <Face />
@@ -125,9 +174,9 @@ const PostCard: React.FC<PostCardProps> = ({
           placeholder="Add a comment…"
           sx={{ flexGrow: 1, mr: 1, '--Input-focusedThickness': '0px' }}
         />
-        <Link disabled underline="none" role="button">
+        <Button>
           Comment
-        </Link>
+        </Button>
       </CardOverflow>
     </Card>
   );

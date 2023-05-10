@@ -8,6 +8,7 @@ import ProtectedRoute from './services/require.auth';
 import Group from './pages/group/Group';
 import { useSelector } from "react-redux";
 import Groups from './pages/groups/Groups';
+import Signup from './pages/authenticate/Signup';
 
 
 function App() {
@@ -51,8 +52,8 @@ function App() {
           </ProtectedRoute>
         }
       />
-
       <Route path = "/log-in" element={<Login/>}></Route>
+      <Route path = "/sign-up" element={<Signup/>}></Route>
       </Routes>
     </BrowserRouter>
     </div>

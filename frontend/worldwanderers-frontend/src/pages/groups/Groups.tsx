@@ -18,7 +18,7 @@ useEffect(() => {
     void (async () => {
         setGroups(await groupService.getAllGroups());
     })();
-    }, [groups]);
+    }, []);
 
   return (
     <Box
