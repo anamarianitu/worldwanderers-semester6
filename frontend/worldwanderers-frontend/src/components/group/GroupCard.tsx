@@ -60,9 +60,10 @@ const GroupCard: React.FC<GroupCardProps> = ({
     setExpanded(!expanded);
   };
 
+  const handleJoinGroup = () => {
+alert("join")  };
+
   const navigateToGroup = () => {
-    alert(id);
-    //get the id of the group from this navigate
     navigate(`/groups/${id}`);
 };
 
@@ -75,30 +76,14 @@ const GroupCard: React.FC<GroupCardProps> = ({
             </Avatar>
           }
           action={
-            <Button onClick={navigateToGroup} color="secondary">View Group</Button>
-          }
-          title={title}
-          subheader="September 14, 2016"
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image={image}
-          alt="Group Image"
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
+            <>
+            <Button onClick={handleJoinGroup}>
+              Join the group
+            </Button>
+            <IconButton aria-label="share" onClick={navigateToGroup}>
+              <ArrowForwardIcon />
+            </IconButton>
+            <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -106,22 +91,46 @@ const GroupCard: React.FC<GroupCardProps> = ({
           >
             <ExpandMoreIcon />
           </ExpandMore>
+            </>
+
+          }
+          titleTypographyProps={{ variant: "h6", sx: { textAlign: "left" } }}
+          title={title}
+          subheaderTypographyProps={{ variant: "subtitle1", sx: { textAlign: "left" } }}
+          subheader={description}
+        />
+        <CardContent>
+          {/* <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography> */}
+        </CardContent>
+        <CardActions disableSpacing>
+          {/* <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton> */}
+          {/* <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore> */}
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>About the group:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-              aside for 10 minutes.
-            </Typography>
-            <Typography paragraph>
-              {description}
-            </Typography>
-            <Typography paragraph>
-              {description}
-            </Typography>
-          </CardContent>
-        </Collapse>
+        <CardContent>
+          <Typography sx={{ textAlign: "left" }} paragraph>About the group</Typography>
+          <Typography sx={{ textAlign: "left" }} paragraph>
+            {description}
+          </Typography>
+          {/* <Typography sx={{ textAlign: "left" }} paragraph>
+            {description}
+          </Typography> */}
+        </CardContent>
+      </Collapse>
       </Card>
     );
 

@@ -16,6 +16,19 @@ class GroupService {
     });
   }
 
+  getGroupsJoinedByUser(userId) {
+    return new Promise((resolve) => {
+      axios
+        .get(`${API_URL}/of-user?userId=${userId}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch(() => {
+          resolve([]);
+        });
+    });
+  }
+
   getGroupById(id) {
     return new Promise((resolve) => {
       axios
@@ -25,6 +38,21 @@ class GroupService {
         })
         .catch(() => {
           resolve(null);
+        });
+    });
+  }
+
+  addUserToGroup(groupId, userId) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${API_URL}/add-user-to-group`, null, {
+          params: { groupId: groupId, userId: userId },
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
         });
     });
   }

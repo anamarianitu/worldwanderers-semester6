@@ -43,4 +43,34 @@ public class GroupController {
     public ResponseEntity<Group> updateUserById(@RequestParam String id, @RequestParam Long destinationId, @RequestParam String title, @RequestParam String description) {
         return ResponseEntity.ok(groupService.updateGroup(id, destinationId, title, description));
     }
+
+    @GetMapping("/of-user")
+    public ResponseEntity<List<Group>> getGroupsJoinedByUser(@RequestParam("userId") String userId){
+        return new ResponseEntity<>(groupService.getGroupsJoinedByUser(userId), OK);
+    }
+
+    @PostMapping("/add-user-to-group")
+    public ResponseEntity<Group> addUserToGroup(
+            @RequestParam("groupId") String groupId,
+            @RequestParam("userId") String userId
+    ) {
+        Optional<Group> optionalGroup = groupService.getGroupById(groupId);
+
+        if (optionalGroup.isPresent()) {
+            Group group = optionalGroup.get();
+            List<String> userIds = group.getUserIds();
+            if (!userIds.contains(userId)) {
+                userIds.add(userId);
+                groupService.updateGroupUserList(groupId, group);
+                return ResponseEntity.ok(group);
+            } else {
+                return ResponseEntity.badRequest().build(); // User already exists in the group
+            }
+        } else {
+            return ResponseEntity.notFound().build(); // Group not found
+        }
+    }
+
+
+
 }

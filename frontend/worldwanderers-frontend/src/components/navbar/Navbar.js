@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import ShareIcon from '@mui/icons-material/Share';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -140,11 +139,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
           </IconButton>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{color: 'white'}} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              sx={{color: 'white'}} 
             />
           </Search>
         </div>

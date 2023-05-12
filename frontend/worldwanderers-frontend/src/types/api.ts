@@ -6,6 +6,14 @@ export interface GroupEntity {
     user_ids: string[]
 }
 
+export interface UserEntity {
+    id: string;
+    firstName: string,
+    lastName: string,
+    username: string,
+    email: string,
+}
+
 export interface PostEntity {
     id: string;
     userId: string,

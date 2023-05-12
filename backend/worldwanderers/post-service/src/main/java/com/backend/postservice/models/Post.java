@@ -20,6 +20,7 @@ public class Post {
 
     @NonNull
     private String description;
+
     @NonNull
     private String userId;
 

@@ -7,8 +7,9 @@ import Login from './pages/authenticate/Login';
 import ProtectedRoute from './services/require.auth';
 import Group from './pages/group/Group';
 import { useSelector } from "react-redux";
-import Groups from './pages/groups/Groups';
 import Signup from './pages/authenticate/Signup';
+import ProfilePage from './pages/profile/Profile';
+import GroupsPage from './pages/groups/Groups';
 
 
 function App() {
@@ -35,7 +36,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-      {/* aici ii trebuie un id al grupului */}
       <Route
         path="/groups/:id"
         element={
@@ -48,7 +48,15 @@ function App() {
         path="/groups"
         element={
           <ProtectedRoute>
-              <Groups />
+              <GroupsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+              <ProfilePage />
           </ProtectedRoute>
         }
       />

@@ -1,81 +1,106 @@
-import { styled } from '@mui/material/styles';
-import { Stack, Box, Container, Button } from '@mui/material';
-// import GroupCard from '../../components/group/GroupCard';
-// import ImageMaldives from '../../assets/images-groups/maldives.jpg'
-// import ImageBucharest from '../../assets/images-groups/bucharest.jpg'
-// import ImageMadeira from '../../assets/images-groups/madeira.jpg'
-// import ImageLech from '../../assets/images-groups/lech.jpg'
-// import ImageBusteni from '../../assets/images-groups/busteni.jpg'
-import PostCard from '../../components/post/PostCard';
-import { PostEntity } from '../../types/api';
-import postService from '../../services/post-service';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-
+import { styled } from "@mui/material/styles";
+import {
+  Stack,
+  Box,
+  Container,
+  Button,
+  Input,
+  CardContent,
+  Typography,
+  Card,
+} from "@mui/material";
+import PostCard from "../../components/post/PostCard";
+import { PostEntity } from "../../types/api";
+import postService from "../../services/post-service";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const Group = () => {
-
   const [posts, setPosts] = useState<PostEntity[] | []>([]);
+  const [postDescription, setPostDescription] = useState("");
   const navigate = useNavigate();
-  const userId = useSelector((state: any) => state.authentication.userId);
+  const loggedInUser = useSelector((state: any) => state.authentication.userId);
   const { id } = useParams();
-
-  const navigateAddNewPost = () => {
-    alert("navigate to add new post in group page");
-  };
 
   useEffect(() => {
     void (async () => {
       setPosts(await postService.getAllPostsFromGroup(id));
     })();
-    }, []);
+  }, []);
 
-    console.log(posts);
+  const handleAddPostToGroup = async () => {
+    const newPost = await postService.addNewPost(loggedInUser, postDescription, id);
+  };
 
+  const handlePostDescriptionInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setPostDescription(value);
+  };
 
   return (
     <>
-    <Container
-      sx={{
-        width: '90%',
-        margin: '0 auto',
-        marginTop: '100px',
-    }}
-    >
-      <Button onClick={navigateAddNewPost}>Add post</Button>
+      <Container
+        sx={{
+          width: "90%",
+          margin: "0 auto",
+          marginTop: "100px",
+        }}
+      ></Container>
 
-    </Container>
       <Box
-      sx={{
-          width: '60%',
-          margin: '0 auto',
-          marginTop: '30px',
-      }}
-  >
-      <Stack spacing={5}>
-
-    {
-        posts?.map((post) => (
-          <PostCard key={post.id} postId={post.id} userId={post.userId} description={post.description} ></PostCard>
-        ))
-    }
-      {/* <PostCard username='anamarianitu181' description='Wandering through the colorful streets of Marrakech 🧡 What is your favorite travel destination?'></PostCard>
-      <PostCard username='elena123' description='Catching a glimpse of the Northern Lights in Iceland ✨ Truly a magical experience!'></PostCard>
-      <PostCard username='bibisor_mic' description='Exploring the ancient ruins of Machu Picchu 🏛️ A true wonder of the world!'></PostCard>
-      <PostCard username='streche_aa' description='Feeling small next to the towering mountains of Patagonia 🏔️ Nature never ceases to amaze me.'></PostCard>
-      <PostCard username='anilinque_55' description='Dipping my toes in the crystal-clear waters of the Maldives 🌴 Paradise found!'></PostCard> */}
-      </Stack>
+        sx={{
+          width: "60%",
+          margin: "0 auto",
+          marginTop: "30px",
+        }}
+      >
+        <Box>
+          <Card sx={{marginBottom: '10px'}}>
+            <CardContent>
+              <Box>
+                <Typography variant="h6" component="div" gutterBottom>
+                  Create a Post
+                </Typography>
+                <Input
+                  placeholder="What's on your mind?"
+                  value={postDescription}
+                  onChange={handlePostDescriptionInputChange}
+                  multiline
+                  rows={3}
+                  fullWidth
+                />
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                marginTop={2}
+                marginBottom={2}
+                justifyContent="space-between"
+              >
+                <Button variant="contained" component="label" sx={{backgroundColor: '#37306B'}}>
+                  Upload Picture
+                  <input type="file" hidden accept="image/*" />
+                </Button>
+                <Button variant="contained" sx={{backgroundColor: '#37306B'}} onClick={handleAddPostToGroup}>Post</Button>
+              </Box>
+            </CardContent>
+          </Card>
+          <Stack spacing={5}>
+            {posts?.map((post) => (
+              <PostCard
+                key={post.id}
+                postId={post.id}
+                userId={post.userId}
+                description={post.description}
+              ></PostCard>
+            ))}
+          </Stack>
+        </Box>
       </Box>
     </>
-
   );
 };
 
 export default Group;
-
-
-
-
-

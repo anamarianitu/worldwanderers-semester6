@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,15 +34,42 @@ public class GroupService {
     }
 
     public Group updateGroup(String id, Long destinationId, String title, String description) {
-        Optional<Group> groupOptional = groupRepository.findById(id);
-        if (!groupOptional.isPresent()) {
-            throw new EntityNotFoundException("Group with id " + id + " not found");
-        }
+        Group group = groupRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found"));
 
-        Group group = groupOptional.get();
         group.setDestinationId(destinationId);
         group.setTitle(title);
         group.setDescription(description);
+
         return groupRepository.save(group);
     }
+
+    public Group updateGroupUserList(String id, Group newGroup) {
+        Group group = groupRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found"));
+
+        group.setUserIds(newGroup.getUserIds());
+
+        return groupRepository.save(group);
+    }
+
+
+    public List<Group> getGroupsJoinedByUser(String userId)
+    {
+        List<Group> groupsJoinedByUser = new ArrayList<>();
+
+        getAllGroups().forEach(group -> {
+            List<String> userIdOfGroup = group.getUserIds();
+            if (userIdOfGroup != null){
+                userIdOfGroup.forEach(userIdFromGroup -> {
+                    if (Objects.equals(userIdFromGroup, userId)) {
+                        groupsJoinedByUser.add(group);
+                    }
+                });
+            }
+        });
+
+        return groupsJoinedByUser;
+    }
+
 }

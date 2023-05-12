@@ -15,6 +15,18 @@ class PostService {
         });
     });
   }
+  getAllPosts() {
+    return new Promise((resolve) => {
+      axios
+        .get(`${API_URL}/`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch(() => {
+          resolve([]);
+        });
+    });
+  }
 
     getAllPostsFromGroup(groupId) {
     return new Promise((resolve) => {
@@ -42,12 +54,19 @@ class PostService {
     });
   }
 
-
-
-
-  addNewPost() {
-
-  }
+  addNewPost(userId, description, groupId) {
+    const newPost = { userId, description, groupId };
+    return new Promise((resolve) => {
+        axios
+            .post(`${API_URL}/add`, newPost)
+            .then((response) => {
+                resolve(response.data);
+            })
+            .catch(() => {
+                resolve(null);
+            });
+    });
+    }
 
 }
 
