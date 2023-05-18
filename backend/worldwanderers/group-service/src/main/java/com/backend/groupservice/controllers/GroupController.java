@@ -59,18 +59,19 @@ public class GroupController {
         if (optionalGroup.isPresent()) {
             Group group = optionalGroup.get();
             List<String> userIds = group.getUserIds();
-            if (!userIds.contains(userId)) {
-                userIds.add(userId);
-                groupService.updateGroupUserList(groupId, group);
-                return ResponseEntity.ok(group);
-            } else {
-                return ResponseEntity.badRequest().build(); // User already exists in the group
+            if (userIds != null){
+                if (!userIds.contains(userId)) {
+                    userIds.add(userId);
+                    groupService.updateGroupUserList(groupId, group);
+                    return ResponseEntity.ok(group);
+                } else {
+                    return ResponseEntity.badRequest().build(); // User already exists in the group
+                }
             }
         } else {
             return ResponseEntity.notFound().build(); // Group not found
         }
+        return null;
     }
-
-
 
 }

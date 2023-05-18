@@ -96,7 +96,7 @@ public class PostControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 //assert
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.id").value("1abc"))
                 .andExpect(jsonPath("$.description").value("Description"));
     }
 }

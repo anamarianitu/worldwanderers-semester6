@@ -18,6 +18,8 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
 import { Stack, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import groupService from '../../services/group-service';
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -52,6 +54,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
 }) => {
 
 
+  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
   const [expanded, setExpanded] = React.useState(false);
   const navigate = useNavigate();
 
@@ -60,8 +63,9 @@ const GroupCard: React.FC<GroupCardProps> = ({
     setExpanded(!expanded);
   };
 
-  const handleJoinGroup = () => {
-alert("join")  };
+  const handleJoinGroup = async () => {
+    await groupService.addUserToGroup(loggedInUserId, id);
+  };
 
   const navigateToGroup = () => {
     navigate(`/groups/${id}`);

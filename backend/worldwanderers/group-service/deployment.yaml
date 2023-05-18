@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: group-service-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: group-service
+  template:
+    metadata:
+      labels:
+        app: group-service
+    spec:
+      containers:
+        - name: group-service
+          image: worldwanderers/group-service:v1.1
+          ports:
+            - containerPort: 8087
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: group-service
+spec:
+  selector:
+    app: group-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8087
+  type: LoadBalancer

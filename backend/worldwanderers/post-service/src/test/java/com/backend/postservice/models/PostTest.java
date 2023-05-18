@@ -10,11 +10,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class PostTest {
     public Post post;
     public static final String POST_ID = "1a2b";
+    public static final String GROUP_ID = "group1";
+    public static final String USER_ID = "user1";
     public static final String DESCRIPTION = "DESCRIPTION";
 
     @BeforeEach
     void setUp(){
-        post = new Post(POST_ID, DESCRIPTION);
+        post = new Post(POST_ID, DESCRIPTION, GROUP_ID, USER_ID);
     }
 
     @Test

@@ -42,7 +42,7 @@ class GroupService {
     });
   }
 
-  addUserToGroup(groupId, userId) {
+  addUserToGroup(userId, groupId) {
     return new Promise((resolve, reject) => {
       axios
         .post(`${API_URL}/add-user-to-group`, null, {
