@@ -10,7 +10,6 @@ jobs:
           command: |
             cd backend/worldwanderers
             ./gradlew build
-
   test:
     docker:
       - image: azul/zulu-openjdk:17
