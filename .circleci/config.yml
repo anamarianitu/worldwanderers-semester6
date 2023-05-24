@@ -20,3 +20,12 @@ jobs:
           command: |
             cd backend/worldwanderers
             ./gradlew test
+
+# Orchestrate the job run sequence
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
