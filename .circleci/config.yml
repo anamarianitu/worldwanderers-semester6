@@ -23,24 +23,49 @@ jobs:
             ./gradlew test
 
   build-image:
-    executor: docker-publisher
+    docker:
+      - image: circleci/openjdk:17
     steps:
       - checkout
       - setup_remote_docker
-      - docker/login:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
       - run:
           name: Log in to Docker Hub
           command: |
             echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin
       - run:
-          name: Build and Push Docker Image
+          name: Build and Push Docker Images
           command: |
             cd backend/worldwanderers/post-service
             ./gradlew build
             docker build -t worldwanderers/post-service:v1.1 .
             docker push worldwanderers/post-service:v1.1
+
+            cd ../group-service
+            ./gradlew build
+            docker build -t worldwanderers/group-service:v1.1 .
+            docker push worldwanderers/group-service:v1.1
+
+            cd ../user-service
+            ./gradlew build
+            docker build -t worldwanderers/user-service:v1.1 .
+            docker push worldwanderers/user-service:v1.1
+
+            cd ../security-service
+            ./gradlew build
+            docker build -t worldwanderers/security-service:v1.1 .
+            docker push worldwanderers/security-service:v1.1
+
+            cd ../api-gateway
+            ./gradlew build
+            docker build -t worldwanderers/api-gateway:v1.1 .
+            docker push worldwanderers/api-gateway:v1.1
+
+            cd ../discovery-service
+            ./gradlew build
+            docker build -t worldwanderers/discovery-service:v1.1 .
+            docker push worldwanderers/discovery-service:v1.1
+
+            echo "Build and push Docker images complete."
 
 # Orchestrate the job run sequence
 workflows:
@@ -52,4 +77,6 @@ workflows:
           requires:
             - build
       - build-image
+          requires:
+            - build
 
