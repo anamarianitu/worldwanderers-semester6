@@ -24,7 +24,7 @@ jobs:
 
   build-image:
     docker:
-      - image: azul/zulu-openjdk:17
+      - image: musefys6/docker-gradle8-image
     steps:
       - checkout
       - setup_remote_docker
