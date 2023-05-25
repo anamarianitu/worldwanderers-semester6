@@ -76,7 +76,7 @@ workflows:
       - test:
           requires:
             - build
-      - build-image
+      - build-image:
           requires:
             - build
 
