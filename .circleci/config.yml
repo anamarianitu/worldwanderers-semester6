@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: |
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker login -u worldwanderers -p dckr_pat_iCd7KDdjcJJkoaIm3VZeJllxSuE
       - run:
           name: Push Docker Images to Docker Hub
           command: |
