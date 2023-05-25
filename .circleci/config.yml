@@ -1,8 +1,4 @@
 version: 2.1
-
-
-
-
 jobs:
   build:
     docker:
@@ -64,9 +60,6 @@ jobs:
   push-image:
     docker:
       - image: musefys6/docker-gradle8-image:0.0.1
-    auth:
-      DOCKER_USERNAME: worldwanderers
-      DOCKER_PASSWORD: dckr_pat_LPuEsH5Tb377Z4pq7zN5LTwkiX8
     steps:
       - checkout
       - setup_remote_docker
@@ -85,7 +78,6 @@ jobs:
             docker push worldwanderers/discovery-service:v1.1
             echo "Push Docker images complete."
 
-
 # Orchestrate the job run sequence
 workflows:
   version: 2
@@ -101,4 +93,3 @@ workflows:
       - push-image:
           requires:
             - build-image
-
