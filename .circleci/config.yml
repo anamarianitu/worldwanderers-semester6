@@ -24,7 +24,7 @@ jobs:
 
   build-image:
     docker:
-      - image: musefys6/docker-gradle8-image
+      - image: musefys6/docker-gradle8-image:0.0.1
     steps:
       - checkout
       - setup_remote_docker
