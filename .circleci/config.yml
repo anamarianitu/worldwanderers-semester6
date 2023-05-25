@@ -27,8 +27,7 @@ jobs:
       - image: azul/zulu-openjdk:17
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.8
+      - setup_remote_docker
       - run:
           name: Log in to Docker Hub
           command: |
