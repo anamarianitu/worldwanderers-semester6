@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GroupService {
@@ -70,6 +67,29 @@ public class GroupService {
         });
 
         return groupsJoinedByUser;
+    }
+
+    public void deleteUsersFromJoinedGroups(String userId) {
+
+        List<Group> groups = getAllGroups();
+
+        for (Group group : groups) {
+            List<String> userIds = group.getUserIds();
+
+            if (userIds != null) {
+                Iterator<String> iterator = userIds.iterator();
+
+                while (iterator.hasNext()) {
+                    String userIdFromGroup = iterator.next();
+
+                    if (Objects.equals(userIdFromGroup, userId)) {
+                        iterator.remove();
+                    }
+                }
+
+                groupRepository.save(group);
+            }
+        }
     }
 
 }
