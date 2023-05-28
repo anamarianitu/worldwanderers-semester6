@@ -20,11 +20,6 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @Autowired
-    private CommentService commentService;
-
-    @Autowired
-    private LikeService likeService;
 
     @GetMapping("/")
     public ResponseEntity<List<Post>> getAllPosts(){
@@ -64,8 +59,6 @@ public class PostController {
 
         if (post.isPresent()) {
             postService.deletePost(id);
-            commentService.deleteCommentsOfPost(id);
-            likeService.deleteLikesOfPost(id);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
