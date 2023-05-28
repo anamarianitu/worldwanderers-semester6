@@ -54,4 +54,8 @@ public class PostService {
         return postsOfUser;
     }
 
+    public void deletePost(String id) {
+        postRepository.deleteById(id);
+    }
+
 }

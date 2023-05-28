@@ -1,6 +1,8 @@
 package com.backend.postservice.controllers;
 
 import com.backend.postservice.models.Post;
+import com.backend.postservice.services.CommentService;
+import com.backend.postservice.services.LikeService;
 import com.backend.postservice.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,12 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private LikeService likeService;
 
     @GetMapping("/")
     public ResponseEntity<List<Post>> getAllPosts(){
@@ -48,5 +56,19 @@ public class PostController {
     public ResponseEntity<Post> addPost(@RequestBody Post post){
         Post created = postService.addPost(post);
         return new ResponseEntity<>(created, CREATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable(value = "id") String id){
+        Optional<Post> post = postService.getPostById(id);
+
+        if (post.isPresent()) {
+            postService.deletePost(id);
+            commentService.deleteCommentsOfPost(id);
+            likeService.deleteLikesOfPost(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

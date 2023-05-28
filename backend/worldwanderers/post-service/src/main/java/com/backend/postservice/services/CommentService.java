@@ -2,7 +2,6 @@ package com.backend.postservice.services;
 
 import com.backend.postservice.exceptions.CommentNotFound;
 import com.backend.postservice.models.Comment;
-import com.backend.postservice.models.Like;
 import com.backend.postservice.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,5 +62,10 @@ public class CommentService {
         });
 
         return commentsFromPost;
+    }
+
+    public void deleteCommentsOfPost(String postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        commentRepository.deleteAll(comments);
     }
 }

@@ -10,5 +10,6 @@ public interface LikeRepository extends MongoRepository<Like, String> {
     Optional<Like> findById(String id);
 
     List<Like> findByUserId(String userId);
+    List<Like> findByPostId(String postId);
 
 }
