@@ -27,6 +27,15 @@ public class User implements UserDetails {
     @NonNull
     private String password;
 
+    @NonNull
+    private String firstName;
+
+    @NonNull
+    private String lastName;
+
+    @NonNull
+    private String email;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.EMPTY_LIST;

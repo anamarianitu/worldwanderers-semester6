@@ -10,6 +10,7 @@ import { alpha, styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useDispatch } from "react-redux";
+import { logout } from "../../services/auth-service";
 
 const NavigationBar = () => {
   const styles = {
@@ -67,8 +68,7 @@ const NavigationBar = () => {
   };
   const dispatch = useDispatch();
   const handleLogout = () => {
-    alert("logout")
-    // dispatch(logout());
+    dispatch(logout());
   };
 
   const Search = styled("div")(({ theme }) => ({
@@ -144,7 +144,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
-              sx={{color: 'white'}} 
+              sx={{color: 'white'}}
             />
           </Search>
         </div>

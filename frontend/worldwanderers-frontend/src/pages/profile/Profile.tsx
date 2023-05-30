@@ -23,14 +23,17 @@ import {
   Phone,
   PhotoCamera,
 } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import userService from "../../services/user-service";
 import { UserEntity } from "../../types/api";
 import profileImg from "../../assets/profileImg.jpg";
+import { logout } from "../../services/auth-service";
 
 const ProfilePage = () => {
   const loggedInUserId = useSelector((state: any) => state.authentication.userId);
   const [user, setUser] = useState<UserEntity | undefined>();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +52,23 @@ const ProfilePage = () => {
 
     fetchData();
   }, [loggedInUserId]);
+
+  const handleDeleteAccount = () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      userService
+        .deleteUser(loggedInUserId)
+        .then(() => {
+          // Handle successful deletion
+          console.log("User deleted successfully");
+        })
+        .catch((error) => {
+          // Handle error
+          console.error("Error deleting user:", error);
+        });
+      dispatch(logout());
+    }
+  };
 
   return (
     <Box sx={{ maxWidth: '90%', margin: '100px auto' }}>
@@ -106,6 +126,9 @@ const ProfilePage = () => {
             </Grid>
           </Grid>
         </CardContent>
+        <Button variant="outlined" color="error" onClick={handleDeleteAccount} sx={{marginBottom: "10px"}}>
+          Delete Account
+        </Button>
       </Card>
     </Box>
   );

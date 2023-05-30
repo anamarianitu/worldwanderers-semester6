@@ -2,9 +2,11 @@ package com.backend.groupservice.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document
@@ -14,10 +16,11 @@ public class Group {
     @Id
     private String id;
 
+    @NonNull
     private Long destinationId;
-
+    @NonNull
     private String title;
-
+    @NonNull
     private String description;
 
     private List<String> userIds;
@@ -27,6 +30,7 @@ public class Group {
         this.destinationId = destinationId;
         this.description = description;
         this.title = title;
+        this.userIds = new ArrayList<>();
     }
 
     public void setId(String id) {

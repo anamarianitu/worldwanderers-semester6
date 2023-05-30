@@ -57,6 +57,35 @@ class GroupService {
     });
   }
 
+  isGroupJoinedByUser(groupId, userId) {
+    return new Promise((resolve) => {
+        axios
+            .get(`${API_URL}/user-joined?groupId=${groupId}&userId=${userId}`)
+            .then((response) => {
+                resolve(response.data);
+                console.log(response.data);
+            })
+            .catch(() => {
+                resolve(false);
+            });
+    });
+}
+
+  removeUserFromGroup(userId, groupId) {
+    return new Promise((resolve, reject) => {
+      axios
+        .delete(`${API_URL}/remove-user-from-group`, {
+          params: { groupId: groupId, userId: userId },
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
 }
 
 export default new GroupService();

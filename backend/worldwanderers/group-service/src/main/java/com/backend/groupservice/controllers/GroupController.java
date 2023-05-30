@@ -74,4 +74,48 @@ public class GroupController {
         return null;
     }
 
+    @DeleteMapping("/remove-user-from-group")
+    public ResponseEntity<Group> removeUserFromGroup(
+            @RequestParam("groupId") String groupId,
+            @RequestParam("userId") String userId
+    ) {
+        Optional<Group> optionalGroup = groupService.getGroupById(groupId);
+
+        if (optionalGroup.isPresent()) {
+            Group group = optionalGroup.get();
+            List<String> userIds = group.getUserIds();
+            if (userIds != null && userIds.contains(userId)) {
+                userIds.remove(userId);
+                groupService.updateGroupUserList(groupId, group);
+                return ResponseEntity.ok(group);
+            } else {
+                return ResponseEntity.notFound().build(); // User not found in the group
+            }
+        } else {
+            return ResponseEntity.notFound().build(); // Group not found
+        }
+    }
+
+
+    @GetMapping("/user-joined")
+    public ResponseEntity<Boolean> isUserJoinedToGroup(
+            @RequestParam("groupId") String groupId,
+            @RequestParam("userId") String userId
+    ) {
+        Optional<Group> optionalGroup = groupService.getGroupById(groupId);
+
+        if (optionalGroup.isPresent()) {
+            Group group = optionalGroup.get();
+            List<String> userIds = group.getUserIds();
+            if (userIds != null && userIds.contains(userId)) {
+                return ResponseEntity.ok(true); // User is joined to the group
+            } else {
+                return ResponseEntity.ok(false); // User is not joined to the group
+            }
+        } else {
+            return ResponseEntity.notFound().build(); // Group not found
+        }
+    }
+
+
 }
