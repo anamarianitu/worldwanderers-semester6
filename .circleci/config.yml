@@ -67,7 +67,7 @@ jobs:
 
             echo "Build Docker images complete."
 
-    sonarcloud:
+  sonarcloud:
     docker:
       - image: azul/zulu-openjdk:17
     steps:
