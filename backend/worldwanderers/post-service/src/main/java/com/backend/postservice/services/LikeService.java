@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class LikeService {
@@ -64,6 +63,11 @@ public class LikeService {
         });
 
         return likesFromPost;
+    }
+
+    public void deleteLikesOfPost(String postId) {
+        List<Like> likes = likeRepository.findByPostId(postId);
+        likeRepository.deleteAll(likes);
     }
 
 }

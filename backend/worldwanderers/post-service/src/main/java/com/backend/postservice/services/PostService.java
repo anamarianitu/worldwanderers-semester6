@@ -16,6 +16,12 @@ public class PostService {
     @Autowired
     public PostRepository postRepository;
 
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private LikeService likeService;
+
     public Optional<Post> getPostById(String id){
         return postRepository.findById(id);
     }
@@ -54,4 +60,9 @@ public class PostService {
         return postsOfUser;
     }
 
+    public void deletePost(String id) {
+        commentService.deleteCommentsOfPost(id);
+        likeService.deleteLikesOfPost(id);
+        postRepository.deleteById(id);
+    }
 }
