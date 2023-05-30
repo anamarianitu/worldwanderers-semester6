@@ -67,6 +67,15 @@ jobs:
 
             echo "Build Docker images complete."
 
+    sonarcloud:
+    docker:
+      - image: azul/zulu-openjdk:17
+    steps:
+      - checkout
+      - run:
+          name: Analyze on SonarCloud
+          command: gradle build sonarqube"
+
 # Orchestrate the job run sequence
 workflows:
   version: 2
@@ -77,4 +86,6 @@ workflows:
           requires:
             - build
       - build-push-images
+      - sonarcloud:
+          context: SonarCloud
 
