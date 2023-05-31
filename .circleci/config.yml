@@ -67,6 +67,17 @@ jobs:
 
             echo "Build Docker images complete."
 
+  sonarcloud:
+    docker:
+      - image: musefys6/docker-gradle8-image:0.0.1
+    steps:
+      - checkout
+      - run:
+          name: Analyze on SonarCloud
+          command: |
+            cd backend/worldwanderers
+            gradle build sonarqube
+
 # Orchestrate the job run sequence
 workflows:
   version: 2
@@ -77,4 +88,5 @@ workflows:
           requires:
             - build
       - build-push-images
-
+      - sonarcloud:
+          context: SonarCloud
