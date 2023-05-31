@@ -78,6 +78,20 @@ jobs:
             cd backend/worldwanderers
             gradle build sonarqube
 
+  owasp-zap-job:
+    docker:
+      - image: owasp/zap2docker-stable:latest
+
+    steps:
+      - checkout
+      - run:
+          name: Run OWASP ZAP scan
+          command: |
+            docker run --rm -v $(pwd):/zap/wrk/:rw --network host owasp/zap2docker-stable zap-api-scan.py -t https://worldwanderers-semester6.vercel.app/ -f openapi -r owasp-zap-report.html || true
+
+      - store_artifacts:
+          path: owasp-zap-report.html
+
 # Orchestrate the job run sequence
 workflows:
   version: 2
@@ -90,3 +104,4 @@ workflows:
       - build-push-images
       - sonarcloud:
           context: SonarCloud
+      - owasp-zap-job
