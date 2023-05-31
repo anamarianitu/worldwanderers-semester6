@@ -29,6 +29,23 @@ export const authenticateUser = (username, password) => {
   };
 };
 
+export const registerUser = (signupDTO) => {
+  return (dispatch) => {
+    return axios
+      .post(API_URL + "register", signupDTO)
+      .then((response) => {
+        if (response.data) {
+          dispatch(authenticationSuccess(response.data.userId, response.data.accessToken, response.data.refreshToken));
+          startTokenRefresh(response.data.refreshToken);
+          return response.data;
+        }
+      })
+      .catch((error) => {
+        dispatch(authenticationFailure(error.message));
+      });
+  };
+};
+
 export const tokenRefresh = (refreshToken) => {
   return (dispatch) => {
     return axios

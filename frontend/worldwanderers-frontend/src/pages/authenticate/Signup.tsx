@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import loginImage from '../../assets/login.jpg';
 import Typography from '@mui/material/Typography';
-import { authenticateUser, authenticationSuccess, authenticationFailure } from '../../services/auth-service';
+import { registerUser, authenticationSuccess, authenticationFailure } from '../../services/auth-service';
 import { useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
@@ -35,33 +35,48 @@ const Signup = (props: any) => {
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
 
-        if (values.username && values.password) {
-            setValid(true);
+        if (
+          values.username &&
+          values.password &&
+          values.email &&
+          values.email.includes("@") && // Check for "@" in the email
+          values.firstName &&
+          values.lastName
+        ) {
+          setValid(true);
 
-            props
-                .authenticateUser(values.username, values.password)
-                .then((response: any) => {
-                    dispatch(
-                        authenticationSuccess(
-                            response.userId,
-                            response.accessToken,
-                            response.refreshToken
-                        )
-                    );
-                    navigate('/');
-                })
-                .catch((error: Error) => {
-                    dispatch(authenticationFailure(error.message));
-                    setValid(false);
-                    setMessage('Username or password may be incorrect.');
-                });
+          const signupDTO = {
+            username: values.username,
+            password: values.password,
+            email: values.email,
+            firstName: values.firstName,
+            lastName: values.lastName,
+          };
+
+          props
+            .registerUser(signupDTO)
+            .then((response: any) => {
+              dispatch(
+                authenticationSuccess(
+                  response.userId,
+                  response.accessToken,
+                  response.refreshToken
+                )
+              );
+              navigate('/');
+            })
+            .catch((error: Error) => {
+              dispatch(authenticationFailure(error.message));
+              setValid(false);
+              setMessage('Failed to register user.');
+            });
         } else {
-            setValid(false);
-            setMessage('Please enter your details.');
+          setValid(false);
+          setMessage('Please enter all required details, including a valid email address.');
         }
 
         setSubmitted(true);
-    };
+      };
 
     return (
         <Box className="login-page">
@@ -206,7 +221,7 @@ const Signup = (props: any) => {
                             sx={{ mt: '10%', mb: 2, ml: '15%' }}
                             onClick={handleSubmit}
                         >
-                            Log In
+                            Register
                         </Button>
                     </Box>
                 </Box>
@@ -222,7 +237,7 @@ const Signup = (props: any) => {
     );
 };
 const mapDispatchToProps = {
-    authenticateUser,
+    registerUser,
 };
 
 export default connect(null, mapDispatchToProps)(Signup);
