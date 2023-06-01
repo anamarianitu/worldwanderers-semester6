@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import Signup from './pages/authenticate/Signup';
 import ProfilePage from './pages/profile/Profile';
 import GroupsPage from './pages/groups/Groups';
+import MapPage from './pages/map/Map';
 
 
 function App() {
@@ -57,6 +58,14 @@ function App() {
         element={
           <ProtectedRoute>
               <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/map"
+        element={
+          <ProtectedRoute>
+              <MapPage />
           </ProtectedRoute>
         }
       />
