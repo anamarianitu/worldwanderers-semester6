@@ -26,6 +26,26 @@ const berlinPosition = {
   lng: 13.404954
 };
 
+const ghentPosition = {
+  lat: 51.0543,
+  lng: 3.7174
+};
+
+const brusselsPosition = {
+  lat: 50.8503,
+  lng: 4.3517
+};
+
+const brugesPosition = {
+  lat: 51.2093,
+  lng: 3.2247
+};
+
+const rotterdamPosition = {
+  lat: 51.9225,
+  lng: 4.47917
+};
+
 function MapPage() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -62,10 +82,28 @@ function MapPage() {
       <Marker position={amsterdamPosition} onClick={() => handleMarkerClick('Amsterdam')} />
       <Marker position={parisPosition} onClick={() => handleMarkerClick('Paris')} />
       <Marker position={berlinPosition} onClick={() => handleMarkerClick('Berlin')} />
+      <Marker position={ghentPosition} onClick={() => handleMarkerClick('Ghent')} />
+      <Marker position={brusselsPosition} onClick={() => handleMarkerClick('Brussels')} />
+      <Marker position={brugesPosition} onClick={() => handleMarkerClick('Bruges')} />
+      <Marker position={rotterdamPosition} onClick={() => handleMarkerClick('Rotterdam')} />
 
       {selectedCity && (
         <InfoWindow
-          position={selectedCity === 'Amsterdam' ? amsterdamPosition : (selectedCity === 'Paris' ? parisPosition : berlinPosition)}
+          position={
+            selectedCity === 'Amsterdam'
+              ? amsterdamPosition
+              : selectedCity === 'Paris'
+              ? parisPosition
+              : selectedCity === 'Berlin'
+              ? berlinPosition
+              : selectedCity === 'Ghent'
+              ? ghentPosition
+              : selectedCity === 'Brussels'
+              ? brusselsPosition
+              : selectedCity === 'Bruges'
+              ? brugesPosition
+              : rotterdamPosition
+          }
           onCloseClick={handleInfoWindowClose}
         >
           <div>
