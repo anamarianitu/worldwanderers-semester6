@@ -10,12 +10,13 @@ import Group from './pages/group/Group';
 import Signup from './pages/authenticate/Signup';
 import ProfilePage from './pages/profile/Profile';
 import GroupsPage from './pages/groups/Groups';
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import { useSelector } from 'react-redux';
 
 
 function App() {
-  // const token = useSelector((state: any) => state.authentication.token);
-  const token = Cookies.get("accessToken");
+  const token = useSelector((state: any) => state.authentication.token);
+  // const token = Cookies.get("accessToken");
 
   return (
     <div className="App">

@@ -25,6 +25,7 @@ import CommentSection from './CommentSection';
 import { Comment, Like } from '../../types/api';
 import { useSelector } from 'react-redux';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Cookies from "js-cookie";
 
 interface PostCardProps {
   postId: string;
@@ -38,7 +39,8 @@ const PostCard = ({
   description,
 }: PostCardProps) => {
 
-  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  // const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  const loggedInUserId = Cookies.get('userId');
   const [username, setUsername] = useState("");
   const [likes, setLikes] = useState<Like[]>([]);
   const [isLiked, setIsLiked] = useState();
