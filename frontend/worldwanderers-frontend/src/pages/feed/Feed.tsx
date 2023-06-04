@@ -20,7 +20,7 @@ useEffect(() => {
     void (async () => {
         setPosts(await postService.getAllPosts());
     })();
-    }, [posts]);
+    }, []);
 
     return (
         <>

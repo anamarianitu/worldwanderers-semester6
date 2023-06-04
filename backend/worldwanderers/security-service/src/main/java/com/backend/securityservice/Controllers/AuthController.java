@@ -5,11 +5,14 @@ import com.backend.securityservice.Dto.SignupDTO;
 import com.backend.securityservice.Dto.TokenDTO;
 import com.backend.securityservice.Models.User;
 import com.backend.securityservice.Security.TokenGenerator;
+import com.backend.securityservice.Services.CookieManager;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
@@ -34,6 +37,9 @@ public class AuthController {
     @Autowired
     JwtAuthenticationProvider refreshTokenAuthProvider;
 
+    @Autowired
+    CookieManager cookieManager;
+
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody SignupDTO signupDTO) {
         User user = new User(signupDTO.getUsername(), signupDTO.getPassword(), signupDTO.getFirstName(), signupDTO.getLastName(), signupDTO.getEmail());
@@ -45,10 +51,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity login(@RequestBody LoginDTO loginDTO, HttpServletResponse response) {
         Authentication authentication = daoAuthenticationProvider.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(loginDTO.getUsername(), loginDTO.getPassword()));
-
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication));
+        TokenDTO token = tokenGenerator.createToken(authentication);
+        cookieManager.setHttpOnlyCookie(response, "token", token.getAccessToken(), 24 * 60 * 60); // 1 day in seconds
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/token")

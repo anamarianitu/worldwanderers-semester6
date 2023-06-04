@@ -11,6 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useDispatch } from "react-redux";
 import { logout } from "../../services/auth-service";
+import Cookies from "js-cookie";
 
 const NavigationBar = () => {
   const styles = {
@@ -69,6 +70,9 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("userId");
   };
 
   const Search = styled("div")(({ theme }) => ({

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { GroupEntity } from '../../types/api';
 import groupService from '../../services/group-service';
 import { useSelector } from 'react-redux';
+import Cookies from "js-cookie";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,7 +46,8 @@ function a11yProps(index: number) {
 }
 
 export default function GroupsPage() {
-  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  // const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  const loggedInUserId = Cookies.get('userId');
   const [value, setValue] = React.useState(0);
   const [allAvailableGroups, setAllAvailableGroups] = useState<GroupEntity[] | []>([]);
   const [allGroupsJoinedByUser, setAllGroupsJoinedByUser] = useState<GroupEntity[] | []>([]);

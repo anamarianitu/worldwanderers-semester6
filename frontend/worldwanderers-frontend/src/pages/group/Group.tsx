@@ -16,12 +16,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
+
 
 const Group = () => {
   const [posts, setPosts] = useState<PostEntity[] | []>([]);
   const [postDescription, setPostDescription] = useState("");
   const navigate = useNavigate();
-  const loggedInUser = useSelector((state: any) => state.authentication.userId);
+  // const loggedInUser = useSelector((state: any) => state.authentication.userId);
+  const loggedInUser = Cookies.get('userId');
+
   const { id } = useParams();
 
   useEffect(() => {
