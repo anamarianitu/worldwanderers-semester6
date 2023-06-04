@@ -3,6 +3,7 @@ const initialState = {
   userId: null,
   token: null,
   refreshToken: null,
+  role: null,
   error: null,
 };
 
@@ -15,6 +16,7 @@ const authenticationReducer = (state = initialState, action) => {
         userId: action.payload.userId,
         token: action.payload.token,
         refreshToken: action.payload.refreshToken,
+        role: action.payload.role,
         error: null,
       };
     case "AUTHENTICATION_FAILURE":
@@ -24,6 +26,7 @@ const authenticationReducer = (state = initialState, action) => {
         userId: null,
         token: null,
         refreshToken: null,
+        role: null,
         error: action.payload,
       };
     case "LOGOUT":

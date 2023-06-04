@@ -5,18 +5,23 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MapIcon from '@mui/icons-material/Map';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import { InputBase } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
+import GroupIcon from '@mui/icons-material/Group';
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../services/auth-service";
 
 const NavigationBar = () => {
+  const [active, setActive] = useState("");
+  const userRole = useSelector((state) => state.authentication.role);
+
   const styles = {
     appBar: {
       zIndex: 1,
-      backgroundColor: "#37306B",
+      backgroundColor: userRole === "ROLE_ADMIN" ? "#000" : "#37306B",
       color: "#000",
     },
     leftIcons: {
@@ -26,7 +31,7 @@ const NavigationBar = () => {
     },
     iconButton: {
       borderRadius: "50%",
-      backgroundColor: "#494569",
+      backgroundColor: userRole === "ROLE_ADMIN" ? "#454545" : "#494569",
       marginRight: "16px",
     },
     iconButtonCenter: {
@@ -62,7 +67,8 @@ const NavigationBar = () => {
       right: 0,
     },
   };
-  const [active, setActive] = useState("");
+
+
   const handleClick = (value) => {
     setActive(value);
   };
@@ -149,33 +155,65 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
           </Search>
         </div>
         <div style={styles.centerIcons}>
-          <IconButton
-            href="/feed"
-            onClick={() => handleClick("home")}
-            sx={{margin: '10px'}}
-          >
-            <Badge badgeContent={0} color="primary">
-              <HomeIcon sx={styles.icon} />
-            </Badge>
-          </IconButton>
-          <IconButton
-            onClick={() => handleClick("groups")}
-            href="/groups"
-            sx={{margin: '10px'}}
-          >
-            <Badge badgeContent={0} color="primary">
-              <GroupsIcon sx={styles.icon} />
-            </Badge>
-          </IconButton>
-          <IconButton
-            onClick={() => handleClick("map")}
-            href="/map"
-            sx={{margin: '10px'}}
-          >
-            <Badge badgeContent={0} color="primary">
-              <MapIcon sx={styles.icon} />
-            </Badge>
-          </IconButton>
+          {
+            userRole === "ROLE_USER" && (
+              <>
+                <IconButton
+                  href="/feed"
+                  onClick={() => handleClick("home")}
+                  sx={{margin: '10px'}}
+                >
+                  <Badge badgeContent={0} color="primary">
+                    <HomeIcon sx={styles.icon} />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  onClick={() => handleClick("groups")}
+                  href="/groups"
+                  sx={{margin: '10px'}}
+                >
+                  <Badge badgeContent={0} color="primary">
+                    <GroupsIcon sx={styles.icon} />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  onClick={() => handleClick("map")}
+                  href="/map"
+                  sx={{margin: '10px'}}
+                >
+                  <Badge badgeContent={0} color="primary">
+                    <MapIcon sx={styles.icon} />
+                  </Badge>
+                </IconButton>
+              </>
+            )
+          }
+          {
+            userRole === "ROLE_ADMIN" && (
+            <>
+              <IconButton
+                href="/admin/dashboard"
+                onClick={() => handleClick("admin_dashboard")}
+                sx={{margin: '10px'}}
+              >
+                <Badge badgeContent={0} color="primary">
+                  <QueryStatsIcon sx={styles.icon} />
+                </Badge>
+              </IconButton>
+              <IconButton
+                href="/admin/users"
+                onClick={() => handleClick("admin_users")}
+                sx={{margin: '10px'}}
+              >
+                <Badge badgeContent={0} color="primary">
+                  <GroupIcon sx={styles.icon} />
+                </Badge>
+              </IconButton>
+            </>
+
+            )
+          }
+
         </div>
         <div style={styles.rightIcons}>
           <IconButton sx={styles.iconButton} href="/profile">

@@ -11,12 +11,14 @@ export const authenticateUser = (username, password) => {
         password,
       })
       .then((response) => {
+        console.log("anaaa", response.data.authorities[0]?.authority);
         if (response.data) {
           dispatch(
             authenticationSuccess(
               response.data.userId,
               response.data.accessToken,
-              response.data.refreshToken
+              response.data.refreshToken,
+              response.data.authorities[0]?.authority
             )
           );
           startTokenRefresh(response.data.refreshToken);
@@ -56,7 +58,8 @@ export const tokenRefresh = (refreshToken) => {
             authenticationSuccess(
               response.data.userId,
               response.data.accessToken,
-              response.data.refreshToken
+              response.data.refreshToken,
+              response.data.authorities[0]?.authority
             )
           );
         }
@@ -74,11 +77,11 @@ const startTokenRefresh = (refreshToken) => {
   }, 240000);
 };
 
-export const authenticationSuccess = (userId, token, refreshToken) => {
+export const authenticationSuccess = (userId, token, refreshToken, role) => {
   console.log(userId);
   return {
     type: "AUTHENTICATION_SUCCESS",
-    payload: { userId, token, refreshToken },
+    payload: { userId, token, refreshToken, role },
   };
 };
 
