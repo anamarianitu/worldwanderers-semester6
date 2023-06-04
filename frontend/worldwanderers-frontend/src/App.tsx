@@ -12,6 +12,7 @@ import ProfilePage from './pages/profile/Profile';
 import GroupsPage from './pages/groups/Groups';
 // import Cookies from "js-cookie";
 import { useSelector } from 'react-redux';
+import MapPage from './pages/map/Map';
 
 
 function App() {
@@ -60,6 +61,14 @@ function App() {
         element={
           <ProtectedRoute>
               <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/map"
+        element={
+          <ProtectedRoute>
+              <MapPage />
           </ProtectedRoute>
         }
       />

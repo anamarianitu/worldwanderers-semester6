@@ -172,7 +172,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             </Badge>
           </IconButton>
           <IconButton
-            onClick={() => handleClick("destinations")}
+            onClick={() => handleClick("map")}
+            href="/map"
             sx={{margin: '10px'}}
           >
             <Badge badgeContent={0} color="primary">
