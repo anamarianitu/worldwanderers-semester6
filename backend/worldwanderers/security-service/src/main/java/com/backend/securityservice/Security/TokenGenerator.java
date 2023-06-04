@@ -12,11 +12,15 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
+import org.springframework.security.core.GrantedAuthority;
+
 
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.stream.Collectors;
+
 
 @Component
 public class TokenGenerator {
@@ -38,6 +42,10 @@ public class TokenGenerator {
                 .issuedAt(now)
                 .expiresAt(now.plus(10, ChronoUnit.MINUTES))
                 .subject(user.getId())
+                .claim("username", user.getUsername())
+                .claim("roles", user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()))
                 .build();
 
         return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
@@ -67,6 +75,7 @@ public class TokenGenerator {
         TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setUserId(user.getId());
         tokenDTO.setAccessToken(createAccessToken(authentication));
+        tokenDTO.setAuthorities(user.getAuthorities());
 
         String refreshToken;
         if (authentication.getCredentials() instanceof Jwt jwt) {

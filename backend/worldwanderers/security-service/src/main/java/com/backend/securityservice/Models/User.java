@@ -36,9 +36,11 @@ public class User implements UserDetails {
     @NonNull
     private String email;
 
+    private Collection<? extends GrantedAuthority> authorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.EMPTY_LIST;
+        return this.authorities;
     }
 
     @Override

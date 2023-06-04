@@ -43,7 +43,8 @@ public class WebSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/api/auth/*").permitAll()
+//                        .requestMatchers("/api/posts/**").hasRole("ADMIN")
+                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/token", "/api/auth/register/admin").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()
