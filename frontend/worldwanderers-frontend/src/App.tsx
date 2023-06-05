@@ -11,7 +11,8 @@ import Signup from './pages/authenticate/Signup';
 import ProfilePage from './pages/profile/Profile';
 import GroupsPage from './pages/groups/Groups';
 import MapPage from './pages/map/Map';
-import AdminDashboard from './pages/dashboard/AdminDashboard';
+import AdminDashboard from './pages/admin/dashboard/AdminDashboard';
+import UserManagement from './pages/admin/users_management/UserManagement';
 
 function App() {
   const token = useSelector((state: any) => state.authentication.token);
@@ -59,7 +60,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute allowedRoles={allowedRoleUser}>
+              <ProtectedRoute allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
                 <ProfilePage />
               </ProtectedRoute>
             }
@@ -77,6 +78,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={allowedRoleAdmin}>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute allowedRoles={allowedRoleAdmin}>
+                <UserManagement />
               </ProtectedRoute>
             }
           />

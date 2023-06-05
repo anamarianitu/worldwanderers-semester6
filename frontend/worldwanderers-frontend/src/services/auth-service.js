@@ -11,7 +11,6 @@ export const authenticateUser = (username, password) => {
         password,
       })
       .then((response) => {
-        console.log("anaaa", response.data.authorities[0]?.authority);
         if (response.data) {
           dispatch(
             authenticationSuccess(
@@ -37,7 +36,7 @@ export const registerUser = (signupDTO) => {
       .post(API_URL + "register", signupDTO)
       .then((response) => {
         if (response.data) {
-          dispatch(authenticationSuccess(response.data.userId, response.data.accessToken, response.data.refreshToken));
+          dispatch(authenticationSuccess(response.data.userId, response.data.accessToken, response.data.refreshToken, response.data.authorities[0]?.authority));
           startTokenRefresh(response.data.refreshToken);
           return response.data;
         }

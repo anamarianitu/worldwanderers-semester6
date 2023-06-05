@@ -3,6 +3,18 @@ import axios from "axios";
 const API_URL = "http://localhost:8086/api/users";
 
 class UserService {
+  getAllUsers() {
+    return new Promise((resolve) => {
+      axios
+        .get(`${API_URL}/`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch(() => {
+          resolve([]);
+        });
+    });
+  }
   getUserById(id) {
     return new Promise((resolve) => {
       axios
