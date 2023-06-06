@@ -28,9 +28,11 @@ import userService from "../../services/user-service";
 import { UserEntity } from "../../types/api";
 import profileImg from "../../assets/profileImg.jpg";
 import { logout } from "../../services/auth-service";
+import Cookies from "js-cookie";
 
 const ProfilePage = () => {
-  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  // const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  const loggedInUserId = Cookies.get('userId');
   const [user, setUser] = useState<UserEntity | undefined>();
   const dispatch = useDispatch();
 

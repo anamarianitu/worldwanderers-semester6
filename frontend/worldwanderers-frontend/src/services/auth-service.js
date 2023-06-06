@@ -1,7 +1,14 @@
 import axios from "axios";
 import { store } from "../store/store";
+import Cookies from "js-cookie"
 
 const API_URL = "http://localhost:8082/api/auth/";
+
+const cookieOptions = {
+  expires: 1, // 1 day
+  secure: false, // Set to true for HTTPS only
+  // sameSite: 'strict',
+};
 
 export const authenticateUser = (username, password) => {
   return (dispatch) => {
@@ -20,6 +27,13 @@ export const authenticateUser = (username, password) => {
               response.data.authorities[0]?.authority
             )
           );
+          Cookies.set("accessToken", response.data.accessToken, cookieOptions);
+          Cookies.set(
+            "refreshToken",
+            response.data.refreshToken,
+            cookieOptions
+          );
+          Cookies.set("userId", response.data.userId, cookieOptions);
           startTokenRefresh(response.data.refreshToken);
           return response.data;
         }

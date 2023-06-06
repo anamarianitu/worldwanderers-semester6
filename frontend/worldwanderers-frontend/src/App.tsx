@@ -6,16 +6,19 @@ import Feed from './pages/feed/Feed';
 import Login from './pages/authenticate/Login';
 import ProtectedRoute from './services/require.auth';
 import Group from './pages/group/Group';
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import Signup from './pages/authenticate/Signup';
 import ProfilePage from './pages/profile/Profile';
 import GroupsPage from './pages/groups/Groups';
+// import Cookies from "js-cookie";
+import { useSelector } from 'react-redux';
 import MapPage from './pages/map/Map';
 import AdminDashboard from './pages/admin/dashboard/AdminDashboard';
 import UserManagement from './pages/admin/users_management/UserManagement';
 
 function App() {
   const token = useSelector((state: any) => state.authentication.token);
+  // const token = Cookies.get("accessToken");
 
   const allowedRoleUser = ['ROLE_USER'];
   const allowedRoleAdmin = ['ROLE_ADMIN'];

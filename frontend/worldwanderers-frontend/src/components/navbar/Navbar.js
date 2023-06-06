@@ -13,6 +13,7 @@ import GroupIcon from '@mui/icons-material/Group';
 
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../services/auth-service";
+import Cookies from "js-cookie";
 
 const NavigationBar = () => {
   const [active, setActive] = useState("");
@@ -75,6 +76,9 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("userId");
   };
 
   const Search = styled("div")(({ theme }) => ({

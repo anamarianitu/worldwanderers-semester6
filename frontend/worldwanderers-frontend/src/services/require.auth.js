@@ -5,7 +5,6 @@ import { Navigate, useLocation } from "react-router-dom";
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const user = useSelector((state) => state.authentication.authenticated);
   const userRole = useSelector((state) => state.authentication.role);
-  console.log("rolul", userRole);
   let location = useLocation();
 
   if (!user) {
