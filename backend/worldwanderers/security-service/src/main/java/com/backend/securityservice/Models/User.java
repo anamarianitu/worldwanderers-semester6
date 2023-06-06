@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Date;
 
 @Document
 @Data
@@ -35,6 +36,9 @@ public class User implements UserDetails {
 
     @NonNull
     private String email;
+
+    @CreatedDate
+    private Date createdAt;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -75,5 +79,13 @@ public class User implements UserDetails {
 
     public String getId() {
         return this.id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

@@ -3,10 +3,10 @@ import axios from "axios";
 const API_URL = "http://localhost:8086/api/users";
 
 class UserService {
-  getAllUsers() {
+  getAllUsers(sort) {
     return new Promise((resolve) => {
       axios
-        .get(`${API_URL}/`)
+        .get(`${API_URL}/?sort=${sort}`)
         .then((response) => {
           resolve(response.data);
         })
@@ -15,6 +15,7 @@ class UserService {
         });
     });
   }
+
   getUserById(id) {
     return new Promise((resolve) => {
       axios

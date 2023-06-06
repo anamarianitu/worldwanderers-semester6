@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +28,18 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/")
-    public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<>(userService.getAllUsers(), OK);
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false, defaultValue = "asc") String sort){
+        List<User> users = userService.getAllUsers();
+
+        if (sort.equals("asc")) {
+            users.sort(Comparator.comparing(User::getUsername));
+        } else if (sort.equals("desc")) {
+            users.sort(Comparator.comparing(User::getUsername).reversed());
+        }
+
+        return new ResponseEntity<>(users, OK);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<User>> getUserById(@PathVariable(value = "id") String id){

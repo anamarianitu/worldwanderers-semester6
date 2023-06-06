@@ -23,6 +23,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -41,6 +42,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody SignupDTO signupDTO) {
         User user = new User(signupDTO.getUsername(), signupDTO.getPassword(), signupDTO.getFirstName(), signupDTO.getLastName(), signupDTO.getEmail());
+
+        user.setCreatedAt(new Date());
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         user.setAuthorities(authorities);
@@ -51,9 +55,13 @@ public class AuthController {
         return ResponseEntity.ok(tokenGenerator.createToken(authentication));
     }
 
+
     @PostMapping("/register/admin")
     public ResponseEntity registerAdmin(@RequestBody SignupDTO signupDTO) {
         User user = new User(signupDTO.getUsername(), signupDTO.getPassword(), signupDTO.getFirstName(), signupDTO.getLastName(), signupDTO.getEmail());
+
+        user.setCreatedAt(new Date());
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         user.setAuthorities(authorities);
