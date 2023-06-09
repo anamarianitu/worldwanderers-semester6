@@ -25,7 +25,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: user-service
+                name: security-service
                 port:
                   number: 8082
           - path: /api/posts/
