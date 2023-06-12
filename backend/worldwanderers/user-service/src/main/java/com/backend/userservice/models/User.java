@@ -3,8 +3,12 @@ package com.backend.userservice.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Collection;
+import java.util.Date;
 
 @Document
 @Data
@@ -27,6 +31,11 @@ public class User {
 
     @NonNull
     private String password;
+
+    @CreatedDate
+    private Date createdAt;
+
+    private String country;
 
     public User(String id, String firstName, String lastName, String username, String email, String password) {
         this.id = id;
@@ -83,6 +92,22 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
 

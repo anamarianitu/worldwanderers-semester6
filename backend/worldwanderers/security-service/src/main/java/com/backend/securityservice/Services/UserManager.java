@@ -23,6 +23,7 @@ public class UserManager implements UserDetailsManager {
     @Override
     public void createUser(UserDetails user) {
         ((User) user).setPassword(passwordEncoder.encode(user.getPassword()));
+        ((User) user).setAuthorities(user.getAuthorities());
         userRepository.save((User) user);
     }
 

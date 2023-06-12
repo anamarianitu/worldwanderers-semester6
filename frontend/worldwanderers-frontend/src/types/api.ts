@@ -12,6 +12,8 @@ export interface UserEntity {
     lastName: string,
     username: string,
     email: string,
+    createdAt: Date,
+    country: string,
 }
 
 export interface PostEntity {

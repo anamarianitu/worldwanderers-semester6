@@ -23,7 +23,8 @@ export const authenticateUser = (username, password) => {
             authenticationSuccess(
               response.data.userId,
               response.data.accessToken,
-              response.data.refreshToken
+              response.data.refreshToken,
+              response.data.authorities[0]?.authority
             )
           );
           Cookies.set("accessToken", response.data.accessToken, cookieOptions);
@@ -49,7 +50,7 @@ export const registerUser = (signupDTO) => {
       .post(API_URL + "register", signupDTO)
       .then((response) => {
         if (response.data) {
-          dispatch(authenticationSuccess(response.data.userId, response.data.accessToken, response.data.refreshToken));
+          dispatch(authenticationSuccess(response.data.userId, response.data.accessToken, response.data.refreshToken, response.data.authorities[0]?.authority));
           startTokenRefresh(response.data.refreshToken);
           return response.data;
         }
@@ -70,7 +71,8 @@ export const tokenRefresh = (refreshToken) => {
             authenticationSuccess(
               response.data.userId,
               response.data.accessToken,
-              response.data.refreshToken
+              response.data.refreshToken,
+              response.data.authorities[0]?.authority
             )
           );
         }
@@ -88,11 +90,11 @@ const startTokenRefresh = (refreshToken) => {
   }, 240000);
 };
 
-export const authenticationSuccess = (userId, token, refreshToken) => {
+export const authenticationSuccess = (userId, token, refreshToken, role) => {
   console.log(userId);
   return {
     type: "AUTHENTICATION_SUCCESS",
-    payload: { userId, token, refreshToken },
+    payload: { userId, token, refreshToken, role },
   };
 };
 

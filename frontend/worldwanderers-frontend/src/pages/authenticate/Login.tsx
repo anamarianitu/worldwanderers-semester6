@@ -42,7 +42,8 @@ const Login = (props: any) => {
                         authenticationSuccess(
                             response.userId,
                             response.accessToken,
-                            response.refreshToken
+                            response.refreshToken,
+                            response.authorities[0].authority
                         )
                     );
                     navigate('/');
