@@ -133,11 +133,13 @@ workflows:
   workflow:
     jobs:
       - build
+      - owasp-zap-job
+      - sonarcloud
       - test:
           requires:
             - build
       - build-push-images
-      - kubernetes-deployment
-      - sonarcloud:
-          context: SonarCloud
-      - owasp-zap-job
+      - kubernetes-deployment:
+          requires:
+            - build-push-images
+
