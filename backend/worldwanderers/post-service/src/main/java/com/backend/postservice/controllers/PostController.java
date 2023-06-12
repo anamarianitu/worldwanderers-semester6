@@ -1,12 +1,11 @@
 package com.backend.postservice.controllers;
 
 import com.backend.postservice.models.Post;
-import com.backend.postservice.services.CommentService;
-import com.backend.postservice.services.LikeService;
 import com.backend.postservice.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Optional;
