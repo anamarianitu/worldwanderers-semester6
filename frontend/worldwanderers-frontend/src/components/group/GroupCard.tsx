@@ -21,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Stack, Box, Snackbar } from '@mui/material';
 import { useSelector } from 'react-redux';
 import groupService from '../../services/group-service';
+import Cookies from "js-cookie";
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -51,7 +52,9 @@ const GroupCard: React.FC<GroupCardProps> = ({
   description,
   image,
 }) => {
-  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  // const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  const loggedInUserId = Cookies.get('userId');
+
   const [expanded, setExpanded] = React.useState(false);
   const [isJoined, setIsJoined] = useState(false);
   const [openJoinSnackbar, setOpenJoinSnackbar] = React.useState(false);

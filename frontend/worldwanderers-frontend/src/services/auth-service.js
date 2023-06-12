@@ -1,7 +1,14 @@
 import axios from "axios";
 import { store } from "../store/store";
+import Cookies from "js-cookie"
 
 const API_URL = "http://localhost:8082/api/auth/";
+
+const cookieOptions = {
+  expires: 1, // 1 day
+  secure: false, // Set to true for HTTPS only
+  // sameSite: 'strict',
+};
 
 export const authenticateUser = (username, password) => {
   return (dispatch) => {
@@ -19,6 +26,30 @@ export const authenticateUser = (username, password) => {
               response.data.refreshToken
             )
           );
+          Cookies.set("accessToken", response.data.accessToken, cookieOptions);
+          Cookies.set(
+            "refreshToken",
+            response.data.refreshToken,
+            cookieOptions
+          );
+          Cookies.set("userId", response.data.userId, cookieOptions);
+          startTokenRefresh(response.data.refreshToken);
+          return response.data;
+        }
+      })
+      .catch((error) => {
+        dispatch(authenticationFailure(error.message));
+      });
+  };
+};
+
+export const registerUser = (signupDTO) => {
+  return (dispatch) => {
+    return axios
+      .post(API_URL + "register", signupDTO)
+      .then((response) => {
+        if (response.data) {
+          dispatch(authenticationSuccess(response.data.userId, response.data.accessToken, response.data.refreshToken));
           startTokenRefresh(response.data.refreshToken);
           return response.data;
         }

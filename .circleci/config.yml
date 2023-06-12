@@ -102,8 +102,30 @@ jobs:
             echo "Apply deployment.yaml for group service"
             kubectl apply -f deployment.yaml
 
+  sonarcloud:
+    docker:
+      - image: musefys6/docker-gradle8-image:0.0.1
+    steps:
+      - checkout
+      - run:
+          name: Analyze on SonarCloud
+          command: |
+            cd backend/worldwanderers
+            gradle build sonarqube
 
+  owasp-zap-job:
+    docker:
+      - image: owasp/zap2docker-stable:latest
 
+    steps:
+      - checkout
+      - run:
+          name: Run OWASP ZAP scan
+          command: |
+            docker run --rm -v $(pwd):/zap/wrk/:rw --network host owasp/zap2docker-stable zap-api-scan.py -t https://worldwanderers-semester6.vercel.app/ -f openapi -r owasp-zap-report.html || true
+
+      - store_artifacts:
+          path: owasp-zap-report.html
 
 # Orchestrate the job run sequence
 workflows:
@@ -116,4 +138,6 @@ workflows:
             - build
       - build-push-images
       - kubernetes-deployment
-
+      - sonarcloud:
+          context: SonarCloud
+      - owasp-zap-job
