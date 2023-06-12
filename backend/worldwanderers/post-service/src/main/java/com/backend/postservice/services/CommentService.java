@@ -68,4 +68,10 @@ public class CommentService {
         List<Comment> comments = commentRepository.findByPostId(postId);
         commentRepository.deleteAll(comments);
     }
+
+    public int countCommentsOfPost(String postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        return comments.size();
+    }
+
 }

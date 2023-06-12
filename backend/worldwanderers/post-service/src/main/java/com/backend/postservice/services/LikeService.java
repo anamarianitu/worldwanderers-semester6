@@ -70,4 +70,10 @@ public class LikeService {
         likeRepository.deleteAll(likes);
     }
 
+    public int countLikesOfPost(String postId) {
+        List<Like> likes = likeRepository.findByPostId(postId);
+        return likes.size();
+    }
+
+
 }

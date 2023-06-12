@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const API_URL = "http://localhost:8081/api/posts";
+const EXPORT_API_URL = "http://localhost:8081/api/export";
+
 
 class PostService {
   getAllPostOfUser(userId) {
@@ -67,6 +69,18 @@ class PostService {
             });
     });
     }
+    exportCsvData = (userId) => {
+      return new Promise((resolve) => {
+        axios
+          .get(`${EXPORT_API_URL}/user/${userId}`)
+          .then((response) => {
+            resolve(response.data);
+          })
+          .catch(() => {
+            resolve(null);
+          });
+      });
+    };
 
 }
 
