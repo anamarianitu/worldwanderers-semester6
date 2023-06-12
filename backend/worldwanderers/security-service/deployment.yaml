@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: security-service-deployment
+  name: security-service
 spec:
   replicas: 1
   selector:
@@ -30,6 +30,6 @@ spec:
     app: security-service
   ports:
     - protocol: TCP
-      port: 8082
+      port: 80
       targetPort: 8082
   type: ClusterIP

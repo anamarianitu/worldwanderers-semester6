@@ -1,35 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: group-service-deployment
+  name: api-gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: group-service
+      app: api-gateway
   template:
     metadata:
       labels:
-        app: group-service
+        app: api-gateway
     spec:
       containers:
-        - name: group-service
-          image: worldwanderers/group-service:v1.1
+        - name: api-gateway
+          image: worldwanderers/api-gateway:v1.1
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8087
+            - containerPort: 8080
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: group-service
+  name: api-gateway
 spec:
   selector:
-    app: group-service
+    app: api-gateway
   ports:
     - protocol: TCP
-      port: 8087
-      targetPort: 8087
-  type: ClusterIP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+
+

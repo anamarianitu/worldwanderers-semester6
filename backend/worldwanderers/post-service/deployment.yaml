@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service-deployment
+  name: post-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-service
+      app: post-service
   template:
     metadata:
       labels:
-        app: user-service
+        app: post-service
     spec:
       containers:
-        - name: user-service
-          image: worldwanderers/user-service:v1.1
+        - name: post-service
+          image: worldwanderers/post-service:v1.1
           ports:
-            - containerPort: 8086
+            - containerPort: 8081
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
@@ -24,13 +24,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-service
+  name: post-service
 spec:
   selector:
-    app: user-service
+    app: post-service
   ports:
     - protocol: TCP
-      port: 8086
-      targetPort: 8086
+      port: 80
+      targetPort: 8081
   type: ClusterIP
 

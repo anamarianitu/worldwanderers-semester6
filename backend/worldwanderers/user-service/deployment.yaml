@@ -1,39 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-gateway-deployment
+  name: user-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-gateway
+      app: user-service
   template:
     metadata:
       labels:
-        app: api-gateway
+        app: user-service
     spec:
       containers:
-        - name: api-gateway
-          image: worldwanderers/api-gateway:v1.1
-          imagePullPolicy: Always
+        - name: user-service
+          image: worldwanderers/user-service:v1.1
           ports:
-            - containerPort: 8080
+            - containerPort: 8086
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
-      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-gateway
+  name: user-service
 spec:
   selector:
-    app: api-gateway
+    app: user-service
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
-  type: LoadBalancer
-
+      targetPort: 8086
+  type: ClusterIP
 
