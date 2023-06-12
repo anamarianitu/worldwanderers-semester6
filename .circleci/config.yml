@@ -67,6 +67,41 @@ jobs:
 
             echo "Build Docker images complete."
 
+  kubernetes-deployment:
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - checkout
+      - run:
+          name: Set up GCP credentials
+          command: |
+            echo "$SERVICE_ACCOUNT_KEY_BASE64" > service-account-key.json
+            gcloud auth activate-service-account --key-file=service-account-key.json
+            gcloud config set project avian-principle-382912
+            gcloud container clusters get-credentials worldwanderers-deployment --region europe-west4 --project avian-principle-382912
+      - run:
+          name: Deploy to GCP
+          command: |
+            cd backend/worldwanderers/api-gateway
+            echo "Apply deployment.yaml for api-gateway"
+            kubectl apply -f deployment.yaml
+
+            cd ../security-service
+            echo "Apply deployment.yaml for security service"
+            kubectl apply -f deployment.yaml
+
+            cd ../user-service
+            echo "Apply deployment.yaml for user service"
+            kubectl apply -f deployment.yaml
+
+            cd ../post-service
+            echo "Apply deployment.yaml for post service"
+            kubectl apply -f deployment.yaml
+
+            cd ../group-service
+            echo "Apply deployment.yaml for group service"
+            kubectl apply -f deployment.yaml
+
   sonarcloud:
     docker:
       - image: musefys6/docker-gradle8-image:0.0.1
@@ -102,6 +137,7 @@ workflows:
           requires:
             - build
       - build-push-images
+      - kubernetes-deployment
       - sonarcloud:
           context: SonarCloud
       - owasp-zap-job

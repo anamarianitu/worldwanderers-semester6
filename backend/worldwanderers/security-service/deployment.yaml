@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: group-service
+  name: security-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: group-service
+      app: security-service
   template:
     metadata:
       labels:
-        app: group-service
+        app: security-service
     spec:
       containers:
-        - name: group-service
-          image: worldwanderers/group-service:v1.1
+        - name: security-service
+          image: worldwanderers/security-service:v1.1
           ports:
-            - containerPort: 8087
+            - containerPort: 8082
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: docker
+              value: docker              
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: group-service
+  name: security-service
 spec:
   selector:
-    app: group-service
+    app: security-service
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8087
+      targetPort: 8082
   type: ClusterIP

@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+    - host: minikube.local
+      http:
+        paths:
+          - path: /api/groups/
+            pathType: Prefix
+            backend:
+              service:
+                name: group-service
+                port:
+                  number: 8087
+          - path: /api/users/
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service
+                port:
+                  number: 8086
+          - path: /api/auth/
+            pathType: Prefix
+            backend:
+              service:
+                name: security-service
+                port:
+                  number: 8082
+          - path: /api/posts/
+            pathType: Prefix
+            backend:
+              service:
+                name: post-service
+                port:
+                  number: 8081
+          - path: /api/likes/
+            pathType: Prefix
+            backend:
+              service:
+                name: post-service
+                port:
+                  number: 8081
+          - path: /api/comments/
+            pathType: Prefix
+            backend:
+              service:
+                name: post-service
+                port:
+                  number: 8081
