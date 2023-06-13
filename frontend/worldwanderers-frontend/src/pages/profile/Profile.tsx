@@ -25,10 +25,17 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import userService from "../../services/user-service";
+import postService from "../../services/post-service";
 import { UserEntity } from "../../types/api";
 import profileImg from "../../assets/profileImg.jpg";
 import { logout } from "../../services/auth-service";
 import Cookies from "js-cookie";
+
+interface ExportProps {
+  data: any;
+  fileName: string;
+  fileType: any;
+}
 
 const ProfilePage = () => {
   // const loggedInUserId = useSelector((state: any) => state.authentication.userId);
@@ -54,6 +61,30 @@ const ProfilePage = () => {
 
     fetchData();
   }, [loggedInUserId]);
+
+  const downloadFile = ({ data, fileName, fileType }: ExportProps) => {
+    const blob = new Blob([data], { type: fileType });
+
+    const a = document.createElement("a");
+    a.download = fileName;
+    a.href = window.URL.createObjectURL(blob);
+    const clickEvt = new MouseEvent("click", {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    a.dispatchEvent(clickEvt);
+    a.remove();
+  };
+
+  const handleExportData = async () => {
+    const data = await postService.exportCsvData(loggedInUserId);
+    downloadFile({
+      data: data,
+      fileName: "data.csv",
+      fileType: "text/csv",
+    });
+  };
 
   const handleDeleteAccount = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");
@@ -128,8 +159,11 @@ const ProfilePage = () => {
             </Grid>
           </Grid>
         </CardContent>
-        <Button variant="outlined" color="error" onClick={handleDeleteAccount} sx={{marginBottom: "10px"}}>
+        <Button variant="outlined" color="error" onClick={handleDeleteAccount} sx={{margin: "10px"}}>
           Delete Account
+        </Button>
+        <Button variant="outlined" onClick={handleExportData} sx={{margin: "10px"}}>
+          Export CSV
         </Button>
       </Card>
     </Box>
