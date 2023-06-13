@@ -13,12 +13,12 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway:4.0.3'
-    implementation 'org.springframework.data:spring-data-rest-webmvc:4.0.2'
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'org.testng:testng:7.1.0'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
 tasks.named('test') {

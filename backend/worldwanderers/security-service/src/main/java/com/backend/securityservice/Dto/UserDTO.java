@@ -22,4 +22,10 @@ public class UserDTO {
                 .build();
 
     }
+
+    public UserDTO(String id, String username, Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.authorities = authorities;
+    }
 }
