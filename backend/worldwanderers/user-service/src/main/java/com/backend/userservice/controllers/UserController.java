@@ -71,4 +71,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}/update")
+    public ResponseEntity<User> updateUserById(@PathVariable String id, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String username) {
+        return ResponseEntity.ok(userService.updateUserById(id, firstName, lastName, email, username));
+    }
 }
