@@ -48,7 +48,7 @@ public class WebSecurity {
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()
-                .cors().disable()
+//                .cors().disable()
                 .httpBasic().disable()
                 .oauth2ResourceServer((oauth2) ->
                         oauth2.jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtToUserConverter))
