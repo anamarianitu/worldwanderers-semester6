@@ -54,6 +54,24 @@ class UserService {
         });
     });
   }
+
+  updateUserById(id, firstName, lastName, email, username) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`${API_URL}/${id}/update`, {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          username: username,
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 
 export default new UserService();

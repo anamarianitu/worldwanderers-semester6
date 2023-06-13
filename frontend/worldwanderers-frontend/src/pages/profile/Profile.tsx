@@ -4,9 +4,7 @@ import {
   Box,
   Button,
   Card,
-  CardActions,
   CardContent,
-  CardHeader,
   Divider,
   Grid,
   IconButton,
@@ -14,15 +12,16 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Modal,
+  TextField,
   Typography,
 } from "@mui/material";
 import {
   Email,
   LocationOn,
-  PersonAdd,
-  Phone,
   PhotoCamera,
 } from "@mui/icons-material";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useDispatch, useSelector } from "react-redux";
 import userService from "../../services/user-service";
 import postService from "../../services/post-service";
@@ -38,9 +37,15 @@ interface ExportProps {
 }
 
 const ProfilePage = () => {
-  // const loggedInUserId = useSelector((state: any) => state.authentication.userId);
-  const loggedInUserId = Cookies.get('userId');
+  const loggedInUserId = useSelector((state: any) => state.authentication.userId);
+  // const loggedInUserId = Cookies.get('userId');
   const [user, setUser] = useState<UserEntity | undefined>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+
   const dispatch = useDispatch();
 
 
@@ -61,6 +66,20 @@ const ProfilePage = () => {
 
     fetchData();
   }, [loggedInUserId]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    setFirstName(user?.firstName || "");
+    setLastName(user?.lastName || "");
+    setEmail(user?.email || "");
+    setUsername(user?.username || "");
+  };
+
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   const downloadFile = ({ data, fileName, fileType }: ExportProps) => {
     const blob = new Blob([data], { type: fileType });
@@ -103,6 +122,23 @@ const ProfilePage = () => {
     }
   };
 
+  const handleUpdateUser = () => {
+    const updatedUser = { ...user, firstName, lastName, email, username };
+    // Call the updateUserById method from the userService to update the user details
+    userService
+      .updateUserById(updatedUser.id, updatedUser.firstName, updatedUser.lastName, updatedUser.email, updatedUser.username)
+      .then(() => {
+        // Handle successful update
+        console.log("User details updated successfully");
+        // Close the modal
+        closeModal();
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error updating user details:", error);
+      });
+  };
+
   return (
     <Box sx={{ maxWidth: '90%', margin: '100px auto' }}>
       <Card>
@@ -133,6 +169,39 @@ const ProfilePage = () => {
               <IconButton>
                 <PhotoCamera />
               </IconButton>
+              <IconButton onClick={openModal}>
+                <ModeEditIcon />
+              </IconButton>
+              <Modal open={isModalOpen} onClose={closeModal}>
+                <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 400, bgcolor: "background.paper", boxShadow: 24, p: 4 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Edit User Details
+                  </Typography>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Button variant="contained" color="primary" onClick={handleUpdateUser} sx={{margin: "5px"}}>
+                        Save
+                      </Button>
+                      <Button variant="contained" onClick={closeModal} sx={{margin: "5px"}}>
+                        Cancel
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Modal>
+
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
