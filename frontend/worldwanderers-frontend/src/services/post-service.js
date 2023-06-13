@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8081/api/posts";
-const EXPORT_API_URL = "http://localhost:8081/api/export";
+const API_URL = "http://35.204.225.66/api/posts";
+const EXPORT_API_URL = "http://35.204.225.66/api/export";
 
 
 class PostService {

@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store/store";
 import Cookies from "js-cookie"
 
-const API_URL = "http://localhost:8082/api/auth/";
+const API_URL = "http://35.204.225.66/api/auth/";
 
 const cookieOptions = {
   expires: 1, // 1 day

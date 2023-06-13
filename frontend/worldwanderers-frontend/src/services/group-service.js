@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8087/api/groups";
+const API_URL = "http://35.204.225.66/api/groups";
 
 class GroupService {
   getAllGroups() {

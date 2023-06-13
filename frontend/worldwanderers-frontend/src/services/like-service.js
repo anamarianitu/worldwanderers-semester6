@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8081/api/likes";
+const API_URL = "http://35.204.225.66/api/likes";
 
 class LikeService {
     getAllLikesByPostId(postId) {
