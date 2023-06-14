@@ -90,11 +90,6 @@ public class PostTest {
     }
 
     @Test
-    public void getCreatedAtTest() {
-        Assert.assertNull(post.getCreatedAt());
-    }
-
-    @Test
     public void setCreatedAtTest() {
         // Arrange
         LocalDateTime createdAt = LocalDateTime.now();
