@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Document
@@ -21,6 +22,8 @@ public class Comment {
     private String userId;
     @NonNull
     private String comment;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Comment(String id, String postId, String userId, String comment) {
         this.id = id;

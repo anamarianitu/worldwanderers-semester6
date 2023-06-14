@@ -26,7 +26,7 @@ public class Post {
 
     private String groupId;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt;
 

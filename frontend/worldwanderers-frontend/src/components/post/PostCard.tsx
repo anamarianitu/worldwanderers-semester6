@@ -74,7 +74,7 @@ const PostCard = ({
 
   const handleLikeClick = async () => {
     if (!isLiked) {
-      const newLike = await likeService.addNewLike(postId, userId);
+      const newLike = await likeService.addNewLike(postId, loggedInUserId);
       if (newLike) {
         setIsLiked(newLike);
         setLikes((prevLikes) => [...prevLikes, newLike]);

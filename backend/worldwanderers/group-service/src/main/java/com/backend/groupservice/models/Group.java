@@ -6,6 +6,7 @@ import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +26,16 @@ public class Group {
 
     private List<String> userIds;
 
+    private LocalDateTime createdAt;
+
+
     public Group(String id, String title, Long destinationId, String description) {
         this.id = id;
         this.destinationId = destinationId;
         this.description = description;
         this.title = title;
         this.userIds = new ArrayList<>();
+        this.createdAt = LocalDateTime.now();
     }
 
     public void setId(String id) {

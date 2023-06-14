@@ -32,10 +32,16 @@ const Group = () => {
     void (async () => {
       setPosts(await postService.getAllPostsFromGroup(id));
     })();
-  }, []);
+  }, [id, posts]);
 
   const handleAddPostToGroup = async () => {
-    const newPost = await postService.addNewPost(loggedInUser, postDescription, id);
+    try {
+      const newPost = await postService.addNewPost(loggedInUser, postDescription, id);
+      setPosts((prevPosts) => [...prevPosts, newPost]);
+      setPostDescription("");
+    } catch (error) {
+      console.error("Error adding post:", error);
+    }
   };
 
   const handlePostDescriptionInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
