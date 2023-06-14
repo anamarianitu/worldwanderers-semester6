@@ -1,0 +1,6 @@
+{
+    "baseUrl": "/",
+    "ignoreTestFiles": "*.js",
+    "testFiles": "**/*.ts",
+    "tsConfig": "tsconfig.cypress.json"
+  }
